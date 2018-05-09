@@ -47,7 +47,7 @@ class GameViewController: UIViewController {
         addButton(vView: view, vTitle: "LeftTop", vAlignX: .left, vAlignY: .top, vWidth: 160, vHeight: 200)
         addButton(vView: view, vTitle: "RightTop", vAlignX: .right, vAlignY: .top, vWidth: 160, vHeight: 200)
         
-        addButton(vView: view, vTitle: "LeftBottom", vAlignX: .left, vAlignY: .bottom, vWidth: 160, vHeight: 200)
+        addButton(vView: view, vTitle: "LeftBottom-", vAlignX: .left, vAlignY: .bottom, vWidth: 160, vHeight: 200)
         addButton(vView: view, vTitle: "RightBottom", vAlignX: .right, vAlignY: .bottom, vWidth: 160, vHeight: 200)
         
         addHUDLabel()
