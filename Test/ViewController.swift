@@ -1,5 +1,24 @@
 import UIKit
 
+//**********************************************************
+struct ScreenSize
+{
+    static let SCREEN_WIDTH         = UIScreen.main.bounds.size.width
+    static let SCREEN_HEIGHT        = UIScreen.main.bounds.size.height
+    static let SCREEN_MAX_LENGTH    = max(ScreenSize.SCREEN_WIDTH, ScreenSize.SCREEN_HEIGHT)
+    static let SCREEN_MIN_LENGTH    = min(ScreenSize.SCREEN_WIDTH, ScreenSize.SCREEN_HEIGHT)
+}
+//**********************************************************
+struct DeviceType
+{
+    static let IS_IPHONE_4_OR_LESS  = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH < 568.0
+    static let IS_IPHONE_5          = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 568.0
+    static let IS_IPHONE_6_7          = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 667.0
+    static let IS_IPHONE_6P_7P         = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
+    static let IS_IPAD              = UIDevice.current.userInterfaceIdiom == .pad && ScreenSize.SCREEN_MAX_LENGTH == 1024.0
+    static let IS_IPAD_PRO          = UIDevice.current.userInterfaceIdiom == .pad && ScreenSize.SCREEN_MAX_LENGTH == 1366.0
+}
+//**********************************************************
 enum alignText
 {
     case bottom, top, center
@@ -17,34 +36,29 @@ enum alignY
     top, bottom, center, below, above
 }
 //**********************************************************
-enum alignWidth
-{
-    case
-    width, none
-}
-//**********************************************************
-enum alignHeight
-{
-    case
-    height, none
-}
-//**********************************************************
 struct AppColor {
     static let primary  = UIColor(red: 0.4392156863, green: 0.7490196078, blue: 0.6509803922, alpha: 1)
     static let disabled = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1)
+    static let background = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1) //
 }
 //**********************************************************
 
 class GameViewController: UIViewController {
     
     let HUDLabel = UILabel()
-    let HUDLabel2 = UILabel()
+    //let HUDLabel2 = UILabel()
+    var font = UIFont()
     
     //**************************************************************************
     override var prefersStatusBarHidden: Bool {
         get {
             return true
         }
+    }
+    //**************************************************************************
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
+    {
+        // Portrait versus landscape - remove/reload constraints?
     }
     //**************************************************************************
     override func viewDidLoad() {
@@ -56,40 +70,92 @@ class GameViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         
+        switch UIDevice.current.userInterfaceIdiom
+        {
+        case .phone:
+            font = UIFont.boldSystemFont(ofSize: 16)
+            break
+        case .pad:
+            font = UIFont.boldSystemFont(ofSize: 32)
+            break
+        case .unspecified:
+            font = UIFont.boldSystemFont(ofSize: 16)
+            break
+        default:
+        break
+            
+        }
+        
         let vX = UIScreen.main.bounds.width * 0.70
         let vY = UIScreen.main.bounds.height * 0.60
-        let vX2 = UIScreen.main.bounds.height * 0.20
+        let vX2 = UIScreen.main.bounds.width * 0.10
+        let vY2 = UIScreen.main.bounds.height * 0.05
         
-        addButton(vView: view, vTitle: "Select", vTag: 102, vAlignText: .bottom, vAlignX: .center, vAlignY: .center, vAlignWidth: .width, vAlignHeight: .height, vWidth: vX, vHeight: vY, vSubX: nil, vSubY: nil)
+        let vProgressX = UIScreen.main.bounds.height * 0.25
+        let vProgressY = UIScreen.main.bounds.height * 0.02
         
-        addButton(vView: view, vTitle: "LeftTop", vTag: 103, vAlignText: .center, vAlignX: .left, vAlignY: .top, vAlignWidth: .none, vAlignHeight: .none, vWidth: 160, vHeight: 200, vSubX: nil, vSubY: nil)
-        addButton(vView: view, vTitle: "RightTop", vTag: 104, vAlignText: .center, vAlignX: .right, vAlignY: .top, vAlignWidth: .none, vAlignHeight: .none, vWidth: 160, vHeight: 200, vSubX: nil, vSubY: nil)
+        addButton(vView: view, vTitle: "Select", vTag: 102, vAlignText: .bottom, vAlignX: .center, vAlignY: .center, vWidth: vX, vHeight: vY, vSubX: nil, vSubY: nil)
+        
+        addButton(vView: view, vTitle: "Back", vTag: 103, vAlignText: .center, vAlignX: .left, vAlignY: .top, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
+        addButton(vView: view, vTitle: "RightTop", vTag: 104, vAlignText: .center, vAlignX: .right, vAlignY: .top, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
 
-        addButton(vView: view, vTitle: "LeftBottom", vTag: 105, vAlignText: .center, vAlignX: .left, vAlignY: .bottom, vAlignWidth: .none, vAlignHeight: .none, vWidth: 160, vHeight: 200, vSubX: nil, vSubY: nil)
-        addButton(vView: view, vTitle: "RightBottom", vTag: 106, vAlignText: .center, vAlignX: .right, vAlignY: .bottom, vAlignWidth: .none, vAlignHeight: .none, vWidth: 160, vHeight: 200, vSubX: nil, vSubY: nil)
+        addButton(vView: view, vTitle: "LeftBottom", vTag: 105, vAlignText: .center, vAlignX: .left, vAlignY: .bottom, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
+        addButton(vView: view, vTitle: "RightBottom", vTag: 106, vAlignText: .center, vAlignX: .right, vAlignY: .bottom, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
 
-        addButton(vView: view, vTitle: ">>", vTag: 106, vAlignText: .center, vAlignX: .rightOf, vAlignY: .center, vAlignWidth: .none, vAlignHeight: .height, vWidth: 160, vHeight: vY / 2, vSubX: 102, vSubY: nil)
-        addButton(vView: view, vTitle: "<<", vTag: 107, vAlignText: .center, vAlignX: .leftOf, vAlignY: .center, vAlignWidth: .none, vAlignHeight: .height, vWidth: 160, vHeight: vY / 2, vSubX: 102, vSubY: nil)
+        addButton(vView: view, vTitle: ">>", vTag: 106, vAlignText: .center, vAlignX: .rightOf, vAlignY: .center, vWidth: vX2, vHeight: vY / 2, vSubX: 102, vSubY: nil)
+        addButton(vView: view, vTitle: "<<", vTag: 107, vAlignText: .center, vAlignX: .leftOf, vAlignY: .center, vWidth: vX2, vHeight: vY / 2, vSubX: 102, vSubY: nil)
         
-        addButton(vView: view, vTitle: "Below", vTag: 108, vAlignText: .center, vAlignX: .center, vAlignY: .below, vAlignWidth: .none, vAlignHeight: .none, vWidth: 0, vHeight: 0, vSubX: 102, vSubY: 102)
+        addButton(vView: view, vTitle: "3", vTag: 109, vAlignText: .center, vAlignX: .center, vAlignY: .above, vWidth: vX2, vHeight: 0, vSubX: 102, vSubY: 102)
+        addButton(vView: view, vTitle: "2", vTag: 110, vAlignText: .center, vAlignX: .leftOf, vAlignY: .above, vWidth: vX2, vHeight: 0, vSubX: 109, vSubY: 102)
+        addButton(vView: view, vTitle: "4", vTag: 111, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above, vWidth: vX2, vHeight: 0, vSubX: 109, vSubY: 102)
+        addButton(vView: view, vTitle: "1", vTag: 111, vAlignText: .center, vAlignX: .leftOf, vAlignY: .above, vWidth: vX2, vHeight: 0, vSubX: 110, vSubY: 102)
+        addButton(vView: view, vTitle: "5", vTag: 112, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above,  vWidth: vX2, vHeight: 0, vSubX: 111, vSubY: 102)
         
-        addButton(vView: view, vTitle: "3", vTag: 109, vAlignText: .center, vAlignX: .center, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 102, vSubY: 102)
-        addButton(vView: view, vTitle: "2", vTag: 110, vAlignText: .center, vAlignX: .leftOf, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 109, vSubY: 102)
-        addButton(vView: view, vTitle: "4", vTag: 111, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 109, vSubY: 102)
-        addButton(vView: view, vTitle: "1", vTag: 111, vAlignText: .center, vAlignX: .leftOf, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 110, vSubY: 102)
-        addButton(vView: view, vTitle: "5", vTag: 112, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 111, vSubY: 102)
+        addLabel(vView: view, vTitle: "Reload", vTag: 113, vAlignX: .center, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: nil, vSubY: 102)
+        addProgressBar(vView: view, vProgress: 0.4, vTag: 114, vAlignX: .center, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: nil, vSubY: 113)
         
+        addLabel(vView: view, vTitle: "Shields", vTag: 115, vAlignX: .leftOf, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: 113, vSubY: 102)
+        addProgressBar(vView: view, vProgress: 0.6, vTag: 116, vAlignX: .leftOf, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: 114, vSubY: 115)
+        
+        addLabel(vView: view, vTitle: "Shields", vTag: 117, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: 113, vSubY: 102)
+        addProgressBar(vView: view, vProgress: 0.8, vTag: 118, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: 114, vSubY: 115)
         
         addHUDLabel()
         print("UIBounds: \(UIScreen.main.bounds)")
     }
     //**********************************************************
-    func addButton(vView: UIView, vTitle: String, vTag: Int, vAlignText: alignText, vAlignX: alignX, vAlignY: alignY, vAlignWidth: alignWidth, vAlignHeight: alignHeight, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    func addLabel(vView: UIView, vTitle: String, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    {
+        let vButton = UILabel()
+        vButton.text = vTitle
+        vButton.textAlignment = .center
+        vButton.textColor = AppColor.primary
+        vButton.font = font
+        vButton.adjustsFontSizeToFitWidth = true
+        vButton.tag = vTag
+        vButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(vButton)
+        addAlignment(vView: vView, vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
+    }
+    //**********************************************************
+    func addProgressBar(vView: UIView, vProgress: Float, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    {
+        let vButton = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
+        vButton.tag = vTag
+        vButton.trackTintColor = AppColor.primary
+        vButton.progressTintColor = UIColor.red
+        vButton.translatesAutoresizingMaskIntoConstraints = false
+        vButton.setProgress(vProgress, animated: false)
+        view.addSubview(vButton)
+        addAlignment(vView: vView, vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
+    }
+    //**********************************************************
+    func addButton(vView: UIView, vTitle: String, vTag: Int, vAlignText: alignText, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
     {
         let vButton = UIButton()
         vButton.tag = vTag
         vButton.setTitle(vTitle, for: .normal)
-        vButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 48)
+        vButton.titleLabel?.font = font
         vButton.layer.borderColor = AppColor.primary.cgColor
         vButton.layer.borderWidth = 3
         vButton.layer.cornerRadius = 10
@@ -101,10 +167,10 @@ class GameViewController: UIViewController {
         case .center: break
         }
         view.addSubview(vButton)
-        addAlignment(vView: vView, vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vAlignWidth: vAlignWidth, vAlignHeight: vAlignHeight, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
+        addAlignment(vView: vView, vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
     }
     //**********************************************************
-    func addAlignment(vView: UIView, vButton: UIButton, vAlignX: alignX, vAlignY: alignY, vAlignWidth: alignWidth, vAlignHeight: alignHeight, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    func addAlignment(vView: UIView, vButton: UIView, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
     {
         var constraints: [NSLayoutConstraint] = []
         
@@ -125,19 +191,14 @@ class GameViewController: UIViewController {
         case .above:  constraints.append(alignAbove(vView: vButton, superView: vView.viewWithTag(vSubY!)!)); break
         case .below:  constraints.append(alignBelow(vView: vButton, superView: vView.viewWithTag(vSubY!)!)); break
         }
-        
-        switch(vAlignWidth)
+        if(vWidth != 0)
         {
-        case .width:
-            constraints.append(alignSetWidth(vView: vButton, vConstantWidth: vWidth)); break
-        case .none: break
+            constraints.append(alignSetWidth(vView: vButton, vConstantWidth: vWidth))
         }
         
-        switch(vAlignHeight)
+        if(vHeight != 0)
         {
-        case .height:
-            constraints.append(alignSetHeight(vView: vButton, vConstantHeight: vHeight)); break
-        case .none: break
+            constraints.append(alignSetHeight(vView: vButton, vConstantHeight: vHeight))
         }
         
         NSLayoutConstraint.activate(constraints)
@@ -145,55 +206,53 @@ class GameViewController: UIViewController {
     //**********************************************************
     func alignSetWidth(vView: UIView, vConstantWidth: CGFloat)-> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier:1, constant: vConstantWidth)
+        return NSLayoutConstraint(item: vView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: vConstantWidth)
     }
     //**********************************************************
     func alignSetHeight(vView: UIView, vConstantHeight: CGFloat)-> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier:1, constant: vConstantHeight)
+        return NSLayoutConstraint(item: vView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: vConstantHeight)
     }
     //**********************************************************
     func alignCenterX(vView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
+        return NSLayoutConstraint(item: vView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 5)
     }
     //**********************************************************
     func alignCenterY(vView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0)
+        return NSLayoutConstraint(item: vView, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 5)
     }
     //**********************************************************
     func alignRightOf(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .leading, relatedBy: .equal, toItem: superView, attribute: .trailing, multiplier: 1, constant: 0)
+        return NSLayoutConstraint(item: vView, attribute: .leading, relatedBy: .equal, toItem: superView, attribute: .trailing, multiplier: 1, constant: 5)
     }
     //**********************************************************
     func alignLeftOf(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .trailing, relatedBy: .equal, toItem: superView, attribute: .leading, multiplier: 1, constant: 0)
+        return NSLayoutConstraint(item: vView, attribute: .trailing, relatedBy: .equal, toItem: superView, attribute: .leading, multiplier: 1, constant: -5)
     }
-    
     //**********************************************************
     func alignAbove(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: 0)
+        return NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: -5)
     }
     //**********************************************************
     func alignBelow(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: 0)
+        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: 5)
     }
     
-    //**********************************************************
     func alignLeft(vView: UIView) -> NSLayoutConstraint
     {
-        let vConstraint = NSLayoutConstraint(item: vView, attribute: .leftMargin, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 0)
+        let vConstraint = NSLayoutConstraint(item: vView, attribute: .leftMargin, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 5)
         return vConstraint
     }
     //**********************************************************
     func alignRight(vView: UIView) -> NSLayoutConstraint
     {
-        let vConstraint = NSLayoutConstraint(item: vView, attribute: .rightMargin, relatedBy: .equal, toItem: view, attribute: .rightMargin, multiplier: 1, constant: 0)
+        let vConstraint = NSLayoutConstraint(item: vView, attribute: .rightMargin, relatedBy: .equal, toItem: view, attribute: .rightMargin, multiplier: 1, constant: 5)
         return vConstraint
     }
     //**********************************************************
@@ -205,48 +264,25 @@ class GameViewController: UIViewController {
     //**********************************************************
     func alignBottom(vView: UIView) -> NSLayoutConstraint
     {
-        let vConstraint = NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+        let vConstraint = NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -5)
         return vConstraint
     }
     //**********************************************************
-    
     func addHUDLabel()
     {
         HUDLabel.text = "THIS IS A TEST"
         HUDLabel.textAlignment = .center
         HUDLabel.textColor = AppColor.primary
-        HUDLabel.font = UIFont.boldSystemFont(ofSize: 48)
+        HUDLabel.font = font
         HUDLabel.adjustsFontSizeToFitWidth = true
         HUDLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(HUDLabel)
         NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: HUDLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 10),
+            NSLayoutConstraint(item: HUDLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0),
             NSLayoutConstraint(item: HUDLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 20),
             NSLayoutConstraint(item: HUDLabel, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: -20),
             NSLayoutConstraint(item: HUDLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 48)
             ])
     }
     //**********************************************************
-
-    func addHUDLabel2()
-    {
-        HUDLabel.textAlignment = .center
-        HUDLabel2.textColor = AppColor.primary
-        HUDLabel2.font = UIFont.boldSystemFont(ofSize: 48)
-        HUDLabel2.adjustsFontSizeToFitWidth = true
-        HUDLabel2.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(HUDLabel2)
-        HUDLabel2.addConstraint(NSLayoutConstraint(
-            
-            item:HUDLabel2, attribute:NSLayoutAttribute.top,
-            
-            relatedBy:NSLayoutRelation.equal, toItem:view,
-            
-            attribute:NSLayoutAttribute.bottom, multiplier:1.0, constant: 0.0))
-        
-       
-        
-    }
-    //**********************************************************
-
 }
