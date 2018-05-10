@@ -33,7 +33,7 @@ enum alignX
 enum alignY
 {
     case
-    top, bottom, center, below, above
+    top, bottom, center, below, above, aboveInside, belowInside
 }
 //**********************************************************
 struct AppColor {
@@ -96,7 +96,7 @@ class GameViewController: UIViewController {
         
         addLabel(vView: view, vTitle: "This is the HUD", vTag: 0, vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: 0, vSubY: 0)
         
-        addButton(vView: view, vTitle: "Select", vTag: 102, vAlignText: .bottom, vAlignX: .center, vAlignY: .center, vWidth: vX, vHeight: vY, vSubX: nil, vSubY: nil)
+        addButton(vView: view, vTitle: "Select", vTag: 102, vAlignText: .center, vAlignX: .center, vAlignY: .center, vWidth: vX, vHeight: vY, vSubX: nil, vSubY: nil)
         
         addButton(vView: view, vTitle: "Back", vTag: 103, vAlignText: .center, vAlignX: .left, vAlignY: .top, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
         addButton(vView: view, vTitle: "RightTop", vTag: 104, vAlignText: .center, vAlignX: .right, vAlignY: .top, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
@@ -113,6 +113,10 @@ class GameViewController: UIViewController {
         addButton(vView: view, vTitle: "1", vTag: 111, vAlignText: .center, vAlignX: .leftOf, vAlignY: .above, vWidth: vX2, vHeight: 0, vSubX: 110, vSubY: 102)
         addButton(vView: view, vTitle: "5", vTag: 112, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above,  vWidth: vX2, vHeight: 0, vSubX: 111, vSubY: 102)
         
+        addLabel(vView: view, vTitle: "Chlorine Laser 20Kw", vTag: 1000, vAlignX: .center, vAlignY: .aboveInside, vWidth: 0, vHeight: 0, vSubX: 0, vSubY: 102)
+        addLabel(vView: view, vTitle: "💰 300", vTag: 230, vAlignX: .center, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: nil, vSubY: 1000)
+        addLabel(vView: view, vTitle: "Active: 3 Available: 35", vTag: 1000, vAlignX: .center, vAlignY: .belowInside, vWidth: 0, vHeight: 0, vSubX: 0, vSubY: 102)
+        
         addLabel(vView: view, vTitle: "Reload", vTag: 113, vAlignX: .center, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: nil, vSubY: 102)
         addProgressBar(vView: view, vProgress: 0.4, vTag: 114, vAlignX: .center, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: nil, vSubY: 113)
         
@@ -122,7 +126,21 @@ class GameViewController: UIViewController {
         addLabel(vView: view, vTitle: "Power", vTag: 117, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: 113, vSubY: 102)
         addProgressBar(vView: view, vProgress: 0.8, vTag: 118, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: 114, vSubY: 115)
         
+        addPageControl(vView: view, vTag: 120, vAlignX: .center, vAlignY: .bottom, vWidth: 0, vHeight: 0, vSubX: 0, vSubY: 0)
+        
         print("UIBounds: \(UIScreen.main.bounds)")
+    }
+    //**********************************************************
+    func addPageControl(vView: UIView, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    {
+        let vButton = UIPageControl()
+        vButton.currentPage = 0
+        vButton.numberOfPages = 5
+        vButton.pageIndicatorTintColor = AppColor.primary
+        vButton.tag = vTag
+        vButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(vButton)
+        addAlignment(vView: vView, vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
     }
     //**********************************************************
     func addLabel(vView: UIView, vTitle: String, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
@@ -190,6 +208,8 @@ class GameViewController: UIViewController {
         case .bottom: constraints.append(alignBottom(vView: vButton)); break
         case .center: constraints.append(alignCenterY(vView: vButton)); break
         case .above:  constraints.append(alignAbove(vView: vButton, superView: vView.viewWithTag(vSubY!)!)); break
+        case .aboveInside:  constraints.append(alignAboveInside(vView: vButton, superView: vView.viewWithTag(vSubY!)!)); break
+        case .belowInside:  constraints.append(alignBelowInside(vView: vButton, superView: vView.viewWithTag(vSubY!)!)); break
         case .below:  constraints.append(alignBelow(vView: vButton, superView: vView.viewWithTag(vSubY!)!)); break
         }
         if(vWidth != 0)
@@ -266,6 +286,16 @@ class GameViewController: UIViewController {
     {
         let vConstraint = NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -5)
         return vConstraint
+    }
+    //**********************************************************
+    func alignAboveInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
+    {
+        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: 0)
+    }
+    //**********************************************************
+    func alignBelowInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
+    {
+        return NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: 0)
     }
     //**********************************************************
 }
