@@ -119,7 +119,7 @@ class GameViewController: UIViewController {
         addLabel(vView: view, vTitle: "Shields", vTag: 115, vAlignX: .leftOf, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: 113, vSubY: 102)
         addProgressBar(vView: view, vProgress: 0.6, vTag: 116, vAlignX: .leftOf, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: 114, vSubY: 115)
         
-        addLabel(vView: view, vTitle: "Shields", vTag: 117, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: 113, vSubY: 102)
+        addLabel(vView: view, vTitle: "Power", vTag: 117, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: 113, vSubY: 102)
         addProgressBar(vView: view, vProgress: 0.8, vTag: 118, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: 114, vSubY: 115)
         
         print("UIBounds: \(UIScreen.main.bounds)")
