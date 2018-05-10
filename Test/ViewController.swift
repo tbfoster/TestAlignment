@@ -39,7 +39,7 @@ enum alignY
 struct AppColor {
     static let primary  = UIColor(red: 0.4392156863, green: 0.7490196078, blue: 0.6509803922, alpha: 1)
     static let disabled = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1)
-    static let background = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1) //
+    static let background = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1) // TODO
 }
 //**********************************************************
 
@@ -94,6 +94,8 @@ class GameViewController: UIViewController {
         let vProgressX = UIScreen.main.bounds.height * 0.25
         let vProgressY = UIScreen.main.bounds.height * 0.02
         
+        addLabel(vView: view, vTitle: "This is the HUD", vTag: 0, vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: 0, vSubY: 0)
+        
         addButton(vView: view, vTitle: "Select", vTag: 102, vAlignText: .bottom, vAlignX: .center, vAlignY: .center, vWidth: vX, vHeight: vY, vSubX: nil, vSubY: nil)
         
         addButton(vView: view, vTitle: "Back", vTag: 103, vAlignText: .center, vAlignX: .left, vAlignY: .top, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
@@ -120,7 +122,6 @@ class GameViewController: UIViewController {
         addLabel(vView: view, vTitle: "Shields", vTag: 117, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: 113, vSubY: 102)
         addProgressBar(vView: view, vProgress: 0.8, vTag: 118, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: 114, vSubY: 115)
         
-        addHUDLabel()
         print("UIBounds: \(UIScreen.main.bounds)")
     }
     //**********************************************************
@@ -243,7 +244,6 @@ class GameViewController: UIViewController {
     {
         return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: 5)
     }
-    
     func alignLeft(vView: UIView) -> NSLayoutConstraint
     {
         let vConstraint = NSLayoutConstraint(item: vView, attribute: .leftMargin, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 5)
@@ -266,23 +266,6 @@ class GameViewController: UIViewController {
     {
         let vConstraint = NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -5)
         return vConstraint
-    }
-    //**********************************************************
-    func addHUDLabel()
-    {
-        HUDLabel.text = "THIS IS A TEST"
-        HUDLabel.textAlignment = .center
-        HUDLabel.textColor = AppColor.primary
-        HUDLabel.font = font
-        HUDLabel.adjustsFontSizeToFitWidth = true
-        HUDLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(HUDLabel)
-        NSLayoutConstraint.activate([
-            NSLayoutConstraint(item: HUDLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0),
-            NSLayoutConstraint(item: HUDLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1, constant: 20),
-            NSLayoutConstraint(item: HUDLabel, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1, constant: -20),
-            NSLayoutConstraint(item: HUDLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 48)
-            ])
     }
     //**********************************************************
 }
