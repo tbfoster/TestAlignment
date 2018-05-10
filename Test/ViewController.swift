@@ -60,7 +60,7 @@ class GameViewController: UIViewController {
         let vY = UIScreen.main.bounds.height * 0.60
         let vX2 = UIScreen.main.bounds.height * 0.20
         
-        addButton(vView: view, vTitle: "Center", vTag: 102, vAlignText: .bottom, vAlignX: .center, vAlignY: .center, vAlignWidth: .width, vAlignHeight: .height, vWidth: vX, vHeight: vY, vSubX: nil, vSubY: nil)
+        addButton(vView: view, vTitle: "Select", vTag: 102, vAlignText: .bottom, vAlignX: .center, vAlignY: .center, vAlignWidth: .width, vAlignHeight: .height, vWidth: vX, vHeight: vY, vSubX: nil, vSubY: nil)
         
         addButton(vView: view, vTitle: "LeftTop", vTag: 103, vAlignText: .center, vAlignX: .left, vAlignY: .top, vAlignWidth: .none, vAlignHeight: .none, vWidth: 160, vHeight: 200, vSubX: nil, vSubY: nil)
         addButton(vView: view, vTitle: "RightTop", vTag: 104, vAlignText: .center, vAlignX: .right, vAlignY: .top, vAlignWidth: .none, vAlignHeight: .none, vWidth: 160, vHeight: 200, vSubX: nil, vSubY: nil)
@@ -68,22 +68,24 @@ class GameViewController: UIViewController {
         addButton(vView: view, vTitle: "LeftBottom", vTag: 105, vAlignText: .center, vAlignX: .left, vAlignY: .bottom, vAlignWidth: .none, vAlignHeight: .none, vWidth: 160, vHeight: 200, vSubX: nil, vSubY: nil)
         addButton(vView: view, vTitle: "RightBottom", vTag: 106, vAlignText: .center, vAlignX: .right, vAlignY: .bottom, vAlignWidth: .none, vAlignHeight: .none, vWidth: 160, vHeight: 200, vSubX: nil, vSubY: nil)
 
-        addButton(vView: view, vTitle: "RO >>", vTag: 106, vAlignText: .center, vAlignX: .rightOf, vAlignY: .center, vAlignWidth: .none, vAlignHeight: .height, vWidth: 160, vHeight: vY / 2, vSubX: 102, vSubY: nil)
-        addButton(vView: view, vTitle: "LO <<", vTag: 107, vAlignText: .center, vAlignX: .leftOf, vAlignY: .center, vAlignWidth: .none, vAlignHeight: .height, vWidth: 160, vHeight: vY / 2, vSubX: 102, vSubY: nil)
+        addButton(vView: view, vTitle: ">>", vTag: 106, vAlignText: .center, vAlignX: .rightOf, vAlignY: .center, vAlignWidth: .none, vAlignHeight: .height, vWidth: 160, vHeight: vY / 2, vSubX: 102, vSubY: nil)
+        addButton(vView: view, vTitle: "<<", vTag: 107, vAlignText: .center, vAlignX: .leftOf, vAlignY: .center, vAlignWidth: .none, vAlignHeight: .height, vWidth: 160, vHeight: vY / 2, vSubX: 102, vSubY: nil)
         
         addButton(vView: view, vTitle: "Below", vTag: 108, vAlignText: .center, vAlignX: .center, vAlignY: .below, vAlignWidth: .none, vAlignHeight: .none, vWidth: 0, vHeight: 0, vSubX: 102, vSubY: 102)
-        addButton(vView: view, vTitle: "Above", vTag: 109, vAlignText: .center, vAlignX: .center, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 102, vSubY: 102)
         
-        addButton(vView: view, vTitle: "AboveLeft", vTag: 110, vAlignText: .center, vAlignX: .leftOf, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 109, vSubY: 102)
-        addButton(vView: view, vTitle: "AboveRight", vTag: 111, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 109, vSubY: 102)
+        addButton(vView: view, vTitle: "3", vTag: 109, vAlignText: .center, vAlignX: .center, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 102, vSubY: 102)
+        addButton(vView: view, vTitle: "2", vTag: 110, vAlignText: .center, vAlignX: .leftOf, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 109, vSubY: 102)
+        addButton(vView: view, vTitle: "4", vTag: 111, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 109, vSubY: 102)
+        addButton(vView: view, vTitle: "1", vTag: 111, vAlignText: .center, vAlignX: .leftOf, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 110, vSubY: 102)
+        addButton(vView: view, vTitle: "5", vTag: 112, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above, vAlignWidth: .width, vAlignHeight: .none, vWidth: vX2, vHeight: 0, vSubX: 111, vSubY: 102)
         
         
         addHUDLabel()
+        print("UIBounds: \(UIScreen.main.bounds)")
     }
     //**********************************************************
     func addButton(vView: UIView, vTitle: String, vTag: Int, vAlignText: alignText, vAlignX: alignX, vAlignY: alignY, vAlignWidth: alignWidth, vAlignHeight: alignHeight, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
     {
-        var constraints: [NSLayoutConstraint] = []
         let vButton = UIButton()
         vButton.tag = vTag
         vButton.setTitle(vTitle, for: .normal)
@@ -92,7 +94,6 @@ class GameViewController: UIViewController {
         vButton.layer.borderWidth = 3
         vButton.layer.cornerRadius = 10
         vButton.translatesAutoresizingMaskIntoConstraints = false
-        
         switch(vAlignText)
         {
         case .bottom: vButton.contentVerticalAlignment = UIControlContentVerticalAlignment.bottom; break
@@ -100,7 +101,12 @@ class GameViewController: UIViewController {
         case .center: break
         }
         view.addSubview(vButton)
-        print("UIBounds: \(UIScreen.main.bounds)")
+        addAlignment(vView: vView, vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vAlignWidth: vAlignWidth, vAlignHeight: vAlignHeight, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
+    }
+    //**********************************************************
+    func addAlignment(vView: UIView, vButton: UIButton, vAlignX: alignX, vAlignY: alignY, vAlignWidth: alignWidth, vAlignHeight: alignHeight, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    {
+        var constraints: [NSLayoutConstraint] = []
         
         switch vAlignX
         {
