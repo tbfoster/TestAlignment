@@ -26,10 +26,10 @@ class MainMenuViewController: UIViewController
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         
-        designer.addLabel(vView: view, vTitle: "This is the HUD", vTag: 0, vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: 0, vSubY: 0)
+        designer.addLabel(vTitle: "This is the HUD", vTag: 0, vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: 0, vSubY: 0)
         
-        designer.addButton(vView: view, vTitle: "Add Defense",      vTag: BTN_MAIN_ADD_DEFENSE,     vAlignText: .center, vAlignX: .center, vAlignY: .center, vWidth: 300, vHeight: 100, vSubX: nil, vSubY: nil)
-        designer.addButton(vView: view, vTitle: "Upgrade Defense",  vTag: BTN_MAIN_UPGRADE_DEFENSE, vAlignText: .center, vAlignX: .center, vAlignY: .below,  vWidth: 300, vHeight: 100, vSubX: nil, vSubY: BTN_MAIN_ADD_DEFENSE)
+        designer.addButton(vTitle: "Add Defense",      vTag: BTN_MAIN_ADD_DEFENSE,     vAlignText: .center, vAlignX: .center, vAlignY: .center, vWidth: 300, vHeight: 100, vSubX: nil, vSubY: nil)
+        designer.addButton(vTitle: "Upgrade Defense",  vTag: BTN_MAIN_UPGRADE_DEFENSE, vAlignText: .center, vAlignX: .center, vAlignY: .below,  vWidth: 300, vHeight: 100, vSubX: nil, vSubY: BTN_MAIN_ADD_DEFENSE)
         
         let vAddDefense = view.viewWithTag(BTN_MAIN_ADD_DEFENSE) as! UIButton
         vAddDefense.addTarget(self, action: #selector(handleMainMenu(button:)), for: .touchUpInside)

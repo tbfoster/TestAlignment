@@ -18,18 +18,17 @@ enum alignY
     top, bottom, center, below, above, aboveInside, belowInside
 }
 //**********************************************************
-//**********************************************************
 struct AppColor {
     static let primary  = UIColor(red: 0.4392156863, green: 0.7490196078, blue: 0.6509803922, alpha: 1)
     static let disabled = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1)
     static let background = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1) // TODO
 }
 //**********************************************************
-
 class UIDesigner
 {
     var view: UIView
     var font = UIFont()
+    var defaultButtonHeight: CGFloat = 0
     
     //**********************************************************
     init(vView: UIView)
@@ -51,7 +50,7 @@ class UIDesigner
         }
     }
     //**********************************************************
-    func addPageControl(vView: UIView, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    func addPageControl(vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
     {
         let vButton = UIPageControl()
         vButton.currentPage = 0
@@ -60,10 +59,10 @@ class UIDesigner
         vButton.tag = vTag
         vButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(vButton)
-        addAlignment(vView: vView, vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
+        addAlignment(vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
     }
     //**********************************************************
-    func addLabel(vView: UIView, vTitle: String, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    func addLabel(vTitle: String, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
     {
         let vButton = UILabel()
         vButton.text = vTitle
@@ -74,10 +73,10 @@ class UIDesigner
         vButton.tag = vTag
         vButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(vButton)
-        addAlignment(vView: vView, vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
+        addAlignment(vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
     }
     //**********************************************************
-    func addProgressBar(vView: UIView, vProgress: Float, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    func addProgressBar(vProgress: Float, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
     {
         let vButton = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
         vButton.tag = vTag
@@ -87,10 +86,10 @@ class UIDesigner
         vButton.translatesAutoresizingMaskIntoConstraints = false
         vButton.setProgress(vProgress, animated: false)
         view.addSubview(vButton)
-        addAlignment(vView: vView, vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
+        addAlignment(vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
     }
     //**********************************************************
-    func addButton(vView: UIView, vTitle: String, vTag: Int, vAlignText: alignText, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    func addButton(vTitle: String, vTag: Int, vAlignText: alignText, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
     {
         let vButton = UIButton()
         vButton.tag = vTag
@@ -107,32 +106,33 @@ class UIDesigner
         case .center: break
         }
         view.addSubview(vButton)
-        addAlignment(vView: vView, vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
+        addAlignment(vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
     }
     //**********************************************************
-    func addAlignment(vView: UIView, vButton: UIView, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    func addAlignment(vButton: UIView, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
     {
         var constraints: [NSLayoutConstraint] = []
         
         switch vAlignX
         {
-        case .left:    constraints.append(alignLeft(vView: vButton)); break
-        case .right:   constraints.append(alignRight(vView: vButton)); break
-        case .center:  constraints.append(alignCenterX(vView: vButton)); break
-        case .rightOf: constraints.append(alignRightOf(vView: vButton, superView: vView.viewWithTag(vSubX!)!)); break
-        case .leftOf:  constraints.append(alignLeftOf(vView: vButton, superView: vView.viewWithTag(vSubX!)!)); break
+        case .left:         constraints.append(alignLeft(vView: vButton)); break
+        case .right:        constraints.append(alignRight(vView: vButton)); break
+        case .center:       constraints.append(alignCenterX(vView: vButton)); break
+        case .rightOf:      constraints.append(alignRightOf(vView: vButton, superView: view.viewWithTag(vSubX!)!)); break
+        case .leftOf:       constraints.append(alignLeftOf(vView: vButton, superView: view.viewWithTag(vSubX!)!)); break
         }
         
         switch vAlignY
         {
-        case .top:    constraints.append(alignTop(vView: vButton)); break
-        case .bottom: constraints.append(alignBottom(vView: vButton)); break
-        case .center: constraints.append(alignCenterY(vView: vButton)); break
-        case .above:  constraints.append(alignAbove(vView: vButton, superView: vView.viewWithTag(vSubY!)!)); break
-        case .aboveInside:  constraints.append(alignAboveInside(vView: vButton, superView: vView.viewWithTag(vSubY!)!)); break
-        case .belowInside:  constraints.append(alignBelowInside(vView: vButton, superView: vView.viewWithTag(vSubY!)!)); break
-        case .below:  constraints.append(alignBelow(vView: vButton, superView: vView.viewWithTag(vSubY!)!)); break
+        case .top:          constraints.append(alignTop(vView: vButton)); break
+        case .bottom:       constraints.append(alignBottom(vView: vButton)); break
+        case .center:       constraints.append(alignCenterY(vView: vButton)); break
+        case .above:        constraints.append(alignAbove(vView: vButton, superView: view.viewWithTag(vSubY!)!)); break
+        case .aboveInside:  constraints.append(alignAboveInside(vView: vButton, superView: view.viewWithTag(vSubY!)!)); break
+        case .belowInside:  constraints.append(alignBelowInside(vView: vButton, superView: view.viewWithTag(vSubY!)!)); break
+        case .below:        constraints.append(alignBelow(vView: vButton, superView: view.viewWithTag(vSubY!)!)); break
         }
+        
         if(vWidth != 0)
         {
             constraints.append(alignSetWidth(vView: vButton, vConstantWidth: vWidth))

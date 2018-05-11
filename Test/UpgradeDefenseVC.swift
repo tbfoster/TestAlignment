@@ -1,5 +1,18 @@
 import UIKit
 
+// Menu Main
+let BTN_UD_RETURN        = 14000
+let BTN_UD_REMOVE        = 14001
+let BTN_UD_UPGRADE       = 14002
+let BTN_UD_REPAIR        = 14003
+let BTN_UD_SHIELDS       = 14004
+let BTN_UD_RELOAD        = 14005
+let BTN_UD_POWER         = 14006
+let BTN_UD_SHIELDSL      = 14007
+let BTN_UD_RELOADL       = 14008
+let BTN_UD_POWERL        = 14009
+let BTN_UD_LBL_WEAPON    = 14010
+
 //**************************************************************************
 class UpgradeDefenseVC: UIViewController
 {
@@ -37,53 +50,50 @@ class UpgradeDefenseVC: UIViewController
     //**************************************************************************
     func loadUI(vView: UIView)
     {
-        print("loadUI")
         let designer = UIDesigner.init(vView: view)
         
-        let vX = UIScreen.main.bounds.width * 0.70
-        let vY = UIScreen.main.bounds.height * 0.60
-        //let vX2 = UIScreen.main.bounds.width * 0.12
-        let vY2 = UIScreen.main.bounds.height * 0.05
-        let vTopButtonX = UIScreen.main.bounds.width * 0.25
-        let vProgressX = UIScreen.main.bounds.height * 0.25
-        let vProgressY = UIScreen.main.bounds.height * 0.02
+        let vSelectX = UIScreen.main.bounds.width * 0.70
+        let vSelectY = UIScreen.main.bounds.height * 0.60
         
-        designer.addLabel(vView: view, vTitle: "This is the HUD", vTag: 0, vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: 0, vSubY: 0)
+        let vProgY = UIScreen.main.bounds.height * 0.05
+        let vProgX = UIScreen.main.bounds.height * 0.25
+        let vProgYInd = UIScreen.main.bounds.height * 0.02
         
-        designer.addButton(vView: view, vTitle: "💥 Select", vTag: 102, vAlignText: .center, vAlignX: .center, vAlignY: .center, vWidth: vX, vHeight: vY, vSubX: nil, vSubY: nil)
+        let vActionX = UIScreen.main.bounds.width * 0.25
+        let vActionY = UIScreen.main.bounds.width * 0.08
         
-        designer.addButton(vView: view, vTitle: "❌ Remove", vTag: 109, vAlignText: .center, vAlignX: .center, vAlignY: .above, vWidth: vTopButtonX, vHeight: 0, vSubX: 102, vSubY: 102)
-        designer.addButton(vView: view, vTitle: "Back", vTag: BTN_AD_RETURN, vAlignText: .center, vAlignX: .leftOf, vAlignY: .above, vWidth: vTopButtonX, vHeight: 0, vSubX: 109, vSubY: 102)
-        designer.addButton(vView: view, vTitle: "☢️ Repair", vTag: 111, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above, vWidth: vTopButtonX, vHeight: 0, vSubX: 109, vSubY: 102)
+        designer.addLabel(vTitle: "HUD",        vTag: 0, vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: 0, vSubY: 0)
         
-        designer.addLabel(vView: view, vTitle: "Chlorine Laser 20Kw", vTag: 1000, vAlignX: .center, vAlignY: .aboveInside, vWidth: 0, vHeight: 0, vSubX: 0, vSubY: 102)
-        designer.addLabel(vView: view, vTitle: "💰 300", vTag: 230, vAlignX: .center, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: nil, vSubY: 1000)
-        designer.addLabel(vView: view, vTitle: "Remaining Inventory: 19", vTag: 1001, vAlignX: .center, vAlignY: .belowInside, vWidth: 0, vHeight: 0, vSubX: 0, vSubY: 102)
+        designer.addButton(vTitle: "💥 Select", vTag: BTN_UD_UPGRADE, vAlignText: .center, vAlignX: .center, vAlignY: .center, vWidth: vSelectX, vHeight: vSelectY, vSubX: nil, vSubY: nil)
         
-        designer.addLabel(vView: view, vTitle: "Reload", vTag: 113, vAlignX: .center, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: nil, vSubY: 102)
-        designer.addProgressBar(vView: view, vProgress: 0.4, vTag: 114, vAlignX: .center, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: nil, vSubY: 113)
+        designer.addButton(vTitle: "❌ Remove", vTag: BTN_UD_REMOVE, vAlignText: .center, vAlignX: .center, vAlignY: .above, vWidth: vActionX, vHeight: vActionY, vSubX: BTN_UD_UPGRADE, vSubY: BTN_UD_UPGRADE)
+        designer.addButton(vTitle: "Back",      vTag: BTN_UD_RETURN, vAlignText: .center, vAlignX: .leftOf, vAlignY: .above, vWidth: vActionX, vHeight: vActionY, vSubX: BTN_UD_REMOVE, vSubY: BTN_UD_UPGRADE)
+        designer.addButton(vTitle: "☢️ Repair", vTag: BTN_UD_REPAIR, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above, vWidth: vActionX, vHeight: vActionY, vSubX: BTN_UD_REMOVE, vSubY: BTN_UD_UPGRADE)
         
-        designer.addLabel(vView: view, vTitle: "Shields", vTag: 115, vAlignX: .leftOf, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: 113, vSubY: 102)
-        designer.addProgressBar(vView: view, vProgress: 0.6, vTag: 116, vAlignX: .leftOf, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: 114, vSubY: 115)
+        designer.addLabel(vTitle: "Wep 💰 300", vTag: BTN_UD_LBL_WEAPON, vAlignX: .center, vAlignY: .aboveInside, vWidth: 0, vHeight: 0, vSubX: 0, vSubY: BTN_UD_UPGRADE)
         
-        designer.addLabel(vView: view, vTitle: "Power", vTag: 117, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vY2, vSubX: 113, vSubY: 102)
-        designer.addProgressBar(vView: view, vProgress: 0.8, vTag: 118, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgressX, vHeight: vProgressY, vSubX: 114, vSubY: 115)
+        designer.addLabel(vTitle: "Reload",     vTag: BTN_UD_RELOAD, vAlignX: .center, vAlignY: .below, vWidth: vProgX, vHeight: vProgY, vSubX: nil, vSubY: BTN_UD_UPGRADE)
+        designer.addProgressBar(vProgress: 0.4, vTag: BTN_UD_RELOADL, vAlignX: .center, vAlignY: .below, vWidth: vProgX, vHeight: vProgYInd, vSubX: nil, vSubY: BTN_UD_RELOAD)
+        
+        designer.addLabel(vTitle: "Shields",    vTag: BTN_UD_SHIELDS, vAlignX: .leftOf, vAlignY: .below, vWidth: vProgX, vHeight: vProgY, vSubX: BTN_UD_RELOAD, vSubY: BTN_UD_UPGRADE)
+        designer.addProgressBar(vProgress: 0.6, vTag: BTN_UD_SHIELDSL, vAlignX: .leftOf, vAlignY: .below, vWidth: vProgX, vHeight: vProgYInd, vSubX: BTN_UD_RELOAD, vSubY: BTN_UD_SHIELDS)
+        
+        designer.addLabel(vTitle: "Power",      vTag: BTN_UD_POWER, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgX, vHeight: vProgY, vSubX: BTN_UD_RELOAD, vSubY: BTN_UD_UPGRADE)
+        designer.addProgressBar(vProgress: 0.8, vTag: BTN_UD_POWERL, vAlignX: .rightOf, vAlignY: .below, vWidth: vProgX, vHeight: vProgYInd, vSubX: BTN_UD_RELOAD, vSubY: BTN_UD_POWER)
         
         // Actions
-        let vButton = view.viewWithTag(BTN_AD_RETURN) as! UIButton
-        vButton.addTarget(self, action: #selector(handleButton(button:)), for: .touchUpInside)
+        let vButton1 = view.viewWithTag(BTN_UD_RETURN) as! UIButton
+        vButton1.addTarget(self, action: #selector(handleBackButton(button:)), for: .touchUpInside)
+        
+        
+        
+        
     }
     //**************************************************************************
-    @objc func handleButton(button: UIButton) {
-        switch button.tag
-        {
-        case BTN_AD_RETURN:
+    @objc func handleBackButton(button: UIButton) {
             UpgradeDefenseVC().dismiss(animated: true, completion: nil)
             present(MainMenuViewController(), animated: true, completion: nil)
-            break
-        default:
-            break
-        }
     }
+    
     //**************************************************************************
 }
