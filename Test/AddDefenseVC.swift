@@ -1,44 +1,17 @@
 import UIKit
 
-//**********************************************************
-struct ScreenSize
-{
-    static let SCREEN_WIDTH         = UIScreen.main.bounds.size.width
-    static let SCREEN_HEIGHT        = UIScreen.main.bounds.size.height
-    static let SCREEN_MAX_LENGTH    = max(ScreenSize.SCREEN_WIDTH, ScreenSize.SCREEN_HEIGHT)
-    static let SCREEN_MIN_LENGTH    = min(ScreenSize.SCREEN_WIDTH, ScreenSize.SCREEN_HEIGHT)
-}
-//**********************************************************
-struct DeviceType
-{
-    static let IS_IPHONE_4_OR_LESS  = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH < 568.0
-    static let IS_IPHONE_5          = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 568.0
-    static let IS_IPHONE_6_7          = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 667.0
-    static let IS_IPHONE_6P_7P         = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
-    static let IS_IPAD              = UIDevice.current.userInterfaceIdiom == .pad && ScreenSize.SCREEN_MAX_LENGTH == 1024.0
-    static let IS_IPAD_PRO          = UIDevice.current.userInterfaceIdiom == .pad && ScreenSize.SCREEN_MAX_LENGTH == 1366.0
-}
+// Menu Main
+let BTN_AD_RETURN     = 13000
+//let BTN_MAIN_UPGRADE_DEFENSE = 12001
 
-//**********************************************************
-
-class GameViewController: UIViewController {
+//**************************************************************************
+class AddDefenseVC: UIViewController
+{
     
-    let HUDLabel = UILabel()
-    
-    //**************************************************************************
-    override var prefersStatusBarHidden: Bool {
-        get {
-            return true
-        }
-    }
-    //**************************************************************************
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
-    {
-        // Portrait versus landscape - remove/reload constraints?
-    }
     //**************************************************************************
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .black
         
         let designer = UIDesigner.init(vView: view)
         
@@ -60,12 +33,16 @@ class GameViewController: UIViewController {
         
         designer.addButton(vView: view, vTitle: "💥 Select", vTag: 102, vAlignText: .center, vAlignX: .center, vAlignY: .center, vWidth: vX, vHeight: vY, vSubX: nil, vSubY: nil)
         
-        designer.addButton(vView: view, vTitle: "Ⓜ️enu", vTag: 103, vAlignText: .center, vAlignX: .left, vAlignY: .top, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
+        designer.addButton(vView: view, vTitle: "Ⓜ️enu", vTag: BTN_AD_RETURN, vAlignText: .center, vAlignX: .left, vAlignY: .top, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
+        let vButton = view.viewWithTag(BTN_AD_RETURN) as! UIButton
+        vButton.addTarget(self, action: #selector(handleButton(button:)), for: .touchUpInside)
+        
+        
         designer.addButton(vView: view, vTitle: "RightTop", vTag: 104, vAlignText: .center, vAlignX: .right, vAlignY: .top, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
-
+        
         designer.addButton(vView: view, vTitle: "LeftBottom", vTag: 105, vAlignText: .center, vAlignX: .left, vAlignY: .bottom, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
         designer.addButton(vView: view, vTitle: "RightBottom", vTag: 106, vAlignText: .center, vAlignX: .right, vAlignY: .bottom, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
-
+        
         designer.addButton(vView: view, vTitle: "Next", vTag: 106, vAlignText: .center, vAlignX: .rightOf, vAlignY: .center, vWidth: vX2, vHeight: vY / 2, vSubX: 102, vSubY: nil)
         designer.addButton(vView: view, vTitle: "Prev", vTag: 107, vAlignText: .center, vAlignX: .leftOf, vAlignY: .center, vWidth: vX2, vHeight: vY / 2, vSubX: 102, vSubY: nil)
         
@@ -91,9 +68,18 @@ class GameViewController: UIViewController {
         let vBlink = view.viewWithTag(1001) as! UILabel
         vBlink.startBlink()
         
-        print("UIBounds: \(UIScreen.main.bounds)")
     }
-    //**********************************************************
-    
+    //**************************************************************************
+    @objc func handleButton(button: UIButton) {
+        switch button.tag
+        {
+        case BTN_AD_RETURN:
+            AddDefenseVC().dismiss(animated: true, completion: nil)
+            present(MainMenuViewController(), animated: true, completion: nil)
+            break
+        default:
+            break
+        }
+    }
+    //**************************************************************************
 }
-

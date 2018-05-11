@@ -13,11 +13,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let win = UIWindow()
         win.frame = UIScreen.main.bounds
-        win.rootViewController = UINavigationController(rootViewController: GameViewController())
+        win.rootViewController = UINavigationController(rootViewController: MainMenuViewController())
         win.backgroundColor = UIColor.black
         win.makeKeyAndVisible()
         window = win
