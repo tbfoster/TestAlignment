@@ -48,14 +48,14 @@ class GameViewController: UIViewController {
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         
-        let vX = UIScreen.main.bounds.width * 0.70
-        let vY = UIScreen.main.bounds.height * 0.60
-        let vX2 = UIScreen.main.bounds.width * 0.12
-        let vY2 = UIScreen.main.bounds.height * 0.05
-        let vTopButtonX = UIScreen.main.bounds.width * 0.25
-        let vProgressX = UIScreen.main.bounds.height * 0.25
-        let vProgressY = UIScreen.main.bounds.height * 0.02
-        
+//        let vX = UIScreen.main.bounds.width * 0.70
+//        let vY = UIScreen.main.bounds.height * 0.60
+//        let vX2 = UIScreen.main.bounds.width * 0.12
+//        let vY2 = UIScreen.main.bounds.height * 0.05
+//        let vTopButtonX = UIScreen.main.bounds.width * 0.25
+//        let vProgressX = UIScreen.main.bounds.height * 0.25
+//        let vProgressY = UIScreen.main.bounds.height * 0.02
+//        
 //        designer.addLabel(vTitle: "This is the HUD", vTag: 0, vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: 0, vSubY: 0, vInvertColors: false, vhasFrame: false)
 //
 //        designer.addButton(vTitle: "💥 Select", vTag: 102, vAlignText: .center, vAlignX: .center, vAlignY: .center, vWidth: vX, vHeight: vY, vSubX: nil, vSubY: nil)

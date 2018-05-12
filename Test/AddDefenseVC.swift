@@ -23,6 +23,25 @@ let defenseNamesAdd:[Int: String] = [0:"Chlorine Laser 20kW", 1:"Iodine Laser 80
 //**************************************************************************
 class AddDefenseVC: UIViewController
 {
+    var btnBack = UIButton()
+    var btnSelect = UIButton()
+    var btnNext = UIButton()
+    var btnPrev = UIButton()
+    var btnRiser = UIButton()
+    
+    var lblHUD = UILabel()
+    var lblInvent = UILabel()
+    var lblWeapon = UILabel()
+    var lblReload = UILabel()
+    var lblPower = UILabel()
+    var lblShields = UILabel()
+    
+    var lblReloadProgress = UIProgressView()
+    var lblPowerProgress = UIProgressView()
+    var lblShieldsProgress = UIProgressView()
+    
+    var pageControl = UIPageControl()
+    
     //**************************************************************************
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,53 +70,55 @@ class AddDefenseVC: UIViewController
         
         let vBackX   = UIScreen.main.bounds.width * 0.15
         let vRiserX   = UIScreen.main.bounds.width * 0.54
-        let vActionY = UIScreen.main.bounds.width * 0.08
+        let vDefaultY = UIScreen.main.bounds.width * 0.08
         let vShieldsX = UIScreen.main.bounds.width * 0.23
         
+        // Add buttons
+        btnSelect = designer.addButton(vTitle: "💥 Select", vAlignText: .center)
+        btnNext   = designer.addButton(vTitle: "Next", vAlignText: .center)
+        btnPrev   = designer.addButton(vTitle: "Prev", vAlignText: .center)
+        btnBack   = designer.addButton(vTitle: "Back", vAlignText: .center)
+        btnRiser  = designer.addButton(vTitle: "Add Riser", vAlignText: .center)
+        // Add Labels
+        lblHUD    = designer.addLabel(vTitle: "This is the HUD", vAlignText: .center, vInvertColors: false, vhasFrame: false)
+        lblWeapon  = designer.addLabel(vTitle: "Iodone Laser 20Kb", vAlignText: .center, vInvertColors: false, vhasFrame: false)
+        lblInvent  = designer.addLabel(vTitle: "Inventory 9 of 31", vAlignText: .center, vInvertColors: false, vhasFrame: false)
+        lblShields = designer.addLabel(vTitle: "Shields",           vAlignText: .center, vInvertColors: false, vhasFrame: true)
+        lblReload  = designer.addLabel(vTitle: "Reload",            vAlignText: .center, vInvertColors: false, vhasFrame: true)
+        lblPower   = designer.addLabel(vTitle: "Power",             vAlignText: .center, vInvertColors: false, vhasFrame: true)
+        // Add Progress Bars
+        lblShieldsProgress = designer.addProgressBar(vProgress: 0.25)
+        lblReloadProgress  = designer.addProgressBar(vProgress: 0.45)
+        lblPowerProgress   = designer.addProgressBar(vProgress: 0.85)
+        // Add Page Control
+        pageControl = designer.addPageControl(vStartPage: 0, vMaxPages: 5)
         
-        designer.addLabel(vTitle: "HUD", vTag: 0, vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: 0, vSubY: 0, vInvertColors: false, vhasFrame: false)
+        // Align all components
+        designer.addAlignment(vView: lblHUD,    vAlignX: .center,  vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: nil, vSubY: nil)
         
-        designer.addButton(vTitle: "💥 Select", vTag: BTN_AD_ADD, vAlignText: .center, vAlignX: .center, vAlignY: .center, vWidth: vSelectX, vHeight: vSelectY, vSubX: nil, vSubY: nil)
+        designer.addAlignment(vView: btnSelect, vAlignX: .center,  vAlignY: .center, vWidth: vSelectX, vHeight: vSelectY,  vSubX: nil,       vSubY: nil)
+        designer.addAlignment(vView: btnNext,   vAlignX: .rightOf, vAlignY: .center, vWidth: vNextX,   vHeight: vNextY,    vSubX: btnSelect, vSubY: nil)
+        designer.addAlignment(vView: btnPrev,   vAlignX: .leftOf,  vAlignY: .center, vWidth: vNextX,   vHeight: vNextY,    vSubX: btnSelect, vSubY: nil)
+        designer.addAlignment(vView: btnBack,   vAlignX: .rightOf, vAlignY: .above,  vWidth: vBackX,   vHeight: vDefaultY, vSubX: btnPrev,   vSubY: btnSelect)
+        designer.addAlignment(vView: btnRiser,  vAlignX: .rightOf, vAlignY: .above,  vWidth: vRiserX,  vHeight: vDefaultY, vSubX: btnBack,   vSubY: btnSelect)
         
-        designer.addButton(vTitle: "Next", vTag: BTN_AD_NEXT, vAlignText: .center, vAlignX: .rightOf, vAlignY: .center, vWidth: vNextX, vHeight: vNextY, vSubX: BTN_AD_ADD, vSubY: nil)
-        designer.addButton(vTitle: "Prev", vTag: BTN_AD_PREV, vAlignText: .center, vAlignX: .leftOf, vAlignY: .center, vWidth: vNextX, vHeight: vNextY, vSubX: BTN_AD_ADD, vSubY: nil)
+        designer.addAlignment(vView: lblWeapon, vAlignX: .center,  vAlignY: .aboveInside, vWidth: vWeapX, vHeight: 0, vSubX: nil, vSubY: btnSelect)
+        designer.addAlignment(vView: lblInvent, vAlignX: .center,  vAlignY: .belowInside, vWidth: 0,      vHeight: 0, vSubX: nil, vSubY: btnSelect)
         
-        //designer.addButton(vTitle: "Back", vTag: BTN_AD_RETURN, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above, vWidth: vBackX, vHeight: vActionY, vSubX: BTN_AD_PREV, vSubY: BTN_AD_ADD)
-        btnReturn = designer.addButton2(vTitle: "Back", vTag: BTN_AD_RETURN, vAlignText: .center)
-        designer.addAlignment(vButton: btnReturn, vAlignX: .rightOf, vAlignY: .above, vWidth: vBackX, vHeight: vActionY, vSubX: BTN_AD_PREV, vSubY: BTN_AD_ADD)
-        btnReturn.addTarget(self, action: #selector(handleBackButton(button:)), for: .touchUpInside)
+        designer.addAlignment(vView: lblReload,  vAlignX: .center,  vAlignY: .below, vWidth: vShieldsX, vHeight: vDefaultY, vSubX: nil,       vSubY: btnSelect)
+        designer.addAlignment(vView: lblShields, vAlignX: .leftOf,  vAlignY: .below, vWidth: vShieldsX, vHeight: vDefaultY, vSubX: lblReload, vSubY: btnSelect)
+        designer.addAlignment(vView: lblPower,   vAlignX: .rightOf, vAlignY: .below, vWidth: vShieldsX, vHeight: vDefaultY, vSubX: lblReload, vSubY: btnSelect)
         
-        designer.addButton(vTitle: "👾 Add Riser", vTag: BTN_AD_ADD_RISER, vAlignText: .center, vAlignX: .rightOf, vAlignY: .above, vWidth: vRiserX, vHeight: vActionY, vSubX: BTN_AD_RETURN, vSubY: BTN_AD_ADD)
+        designer.addAlignment(vView: lblShieldsProgress, vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgXL, vHeight: vProgYInd, vSubX: lblShields, vSubY: lblShields)
+        designer.addAlignment(vView: lblReloadProgress,  vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgXL, vHeight: vProgYInd, vSubX: lblReload,  vSubY: lblReload)
+        designer.addAlignment(vView: lblPowerProgress,   vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgXL, vHeight: vProgYInd, vSubX: lblPower,   vSubY: lblPower)
         
+        designer.addAlignment(vView: pageControl, vAlignX: .center, vAlignY: .bottom, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
         
-        
-        designer.addLabel(vTitle: "Weapon 💰 300", vTag: BTN_AD_LBL_WEAPON, vAlignX: .center, vAlignY: .aboveInside, vWidth: vWeapX, vHeight: 0, vSubX: 0, vSubY: BTN_AD_ADD, vInvertColors: true, vhasFrame: false)
-        designer.addLabel(vTitle: "Inventory: 19", vTag: BTN_AD_INVENTORY, vAlignX: .center, vAlignY: .belowInside, vWidth: 0, vHeight: 0, vSubX: 0, vSubY: BTN_AD_ADD, vInvertColors: true, vhasFrame: false)
-        
-        designer.addLabel(vTitle: "Reload",        vTag: BTN_AD_RELOAD,   vAlignX: .center, vAlignY: .below, vWidth: vShieldsX, vHeight: vActionY, vSubX: nil, vSubY: BTN_AD_ADD, vInvertColors: false, vhasFrame: true)
-        designer.addProgressBar(vProgress: 0.4,    vTag: BTN_AD_RELOADL,  vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgXL, vHeight: vProgYInd, vSubX: BTN_AD_RELOAD, vSubY: BTN_AD_RELOAD)
-        
-        designer.addLabel(vTitle: "Shields",       vTag: BTN_AD_SHIELDS, vAlignX: .leftOf, vAlignY: .below, vWidth: vShieldsX, vHeight: vActionY, vSubX: BTN_AD_RELOAD, vSubY: BTN_AD_ADD, vInvertColors: false, vhasFrame: true)
-        designer.addProgressBar(vProgress: 0.6,    vTag: BTN_AD_SHIELDSL, vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgXL, vHeight: vProgYInd, vSubX: BTN_AD_SHIELDS, vSubY: BTN_AD_SHIELDS)
-        
-        designer.addLabel(vTitle: "Power",         vTag: BTN_AD_POWER, vAlignX: .rightOf, vAlignY: .below, vWidth: vShieldsX, vHeight: vActionY, vSubX: BTN_AD_RELOAD, vSubY: BTN_AD_ADD, vInvertColors: false, vhasFrame: true)
-        designer.addProgressBar(vProgress: 0.8,    vTag: BTN_AD_POWERL, vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgXL, vHeight: vProgYInd, vSubX: BTN_AD_POWER, vSubY: BTN_AD_POWER)
-        
-        designer.addPageControl(vTag: BTN_AD_PAGE_VIEW, vAlignX: .center, vAlignY: .bottom, vWidth: 0, vHeight: 0, vSubX: 0, vSubY: 0)
-
-        let vButton = view.viewWithTag(BTN_AD_RETURN) as! UIButton
-        vButton.addTarget(self, action: #selector(handleBackButton(button:)), for: .touchUpInside)
-        
-        let vButton2 = view.viewWithTag(BTN_AD_NEXT) as! UIButton
-        vButton2.addTarget(self, action: #selector(handleNextButton(button:)), for: .touchUpInside)
-        
-        let vButton3 = view.viewWithTag(BTN_AD_PREV) as! UIButton
-        vButton3.addTarget(self, action: #selector(handlePrevButton(button:)), for: .touchUpInside)
-        
-        // Stopped working when I moved designer to its own class
-//        let vBlink = view.viewWithTag(BTN_AD_INVENTORY) as! UILabel
-//        vBlink.startBlink()
-        
+        // Add Actions
+        btnBack.addTarget(self, action: #selector(handleBackButton(button:)), for: .touchUpInside)
+        btnNext.addTarget(self, action: #selector(handleNextButton(button:)), for: .touchUpInside)
+        btnPrev.addTarget(self, action: #selector(handlePrevButton(button:)), for: .touchUpInside)
     }
     //**************************************************************************
     @objc func handleBackButton(button: UIButton) {
@@ -106,20 +127,13 @@ class AddDefenseVC: UIViewController
     }
     //**************************************************************************
     @objc func handleNextButton(button: UIButton) {
-        let vProg = view.viewWithTag(BTN_AD_PAGE_VIEW) as! UIPageControl
-        vProg.currentPage += 1
-        
-        let vDescription = view.viewWithTag(BTN_AD_LBL_WEAPON) as! UILabel
-        vDescription.text = defenseNamesAdd[vProg.currentPage]
+        pageControl.currentPage += 1
+        lblWeapon.text = defenseNamesAdd[pageControl.currentPage]
     }
     //**************************************************************************
     @objc func handlePrevButton(button: UIButton) {
-        
-        let vProg = view.viewWithTag(BTN_AD_PAGE_VIEW) as! UIPageControl
-        vProg.currentPage -= 1
-        
-        let vDescription = view.viewWithTag(BTN_AD_LBL_WEAPON) as! UILabel
-        vDescription.text = defenseNamesAdd[vProg.currentPage]
+        pageControl.currentPage -= 1
+        lblWeapon.text = defenseNamesAdd[pageControl.currentPage]
     }
     //**************************************************************************
 }
