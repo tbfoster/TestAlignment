@@ -44,12 +44,10 @@ class HudVC: UIViewController
         // Align all components
         designer.addAlignment(vView: lblHUD,    vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: nil, vSubY: nil)
         
-        designer.addAlignment(vView: btnRiserMode, vAlignX: .center,   vAlignY: .center,  vWidth: vRiserModeX, vHeight: vDefaultY, vSubX: nil,          vSubY: nil)
-        
-        designer.addAlignment(vView: btnResetView, vAlignX: .center,  vAlignY: .below, vWidth: vResetViewX, vHeight: vDefaultY,  vSubX: nil,          vSubY: btnRiserMode)
-        designer.addAlignment(vView: btnZoomIn,    vAlignX: .leftOf,  vAlignY: .below,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnResetView, vSubY: btnRiserMode)
-        designer.addAlignment(vView: btnZoomOut,   vAlignX: .rightOf, vAlignY: .below,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnResetView, vSubY: btnRiserMode)
-        
+        designer.addAlignment(vView: btnRiserMode, vAlignX: .center,   vAlignY: .center, vWidth: vRiserModeX, vHeight: vDefaultY, vSubX: nil,          vSubY: nil)
+        designer.addAlignment(vView: btnResetView, vAlignX: .center,   vAlignY: .below,  vWidth: vResetViewX, vHeight: vDefaultY, vSubX: nil,          vSubY: btnRiserMode)
+        designer.addAlignment(vView: btnZoomIn,    vAlignX: .leftOf,   vAlignY: .below,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnResetView, vSubY: btnRiserMode)
+        designer.addAlignment(vView: btnZoomOut,   vAlignX: .rightOf,  vAlignY: .below,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnResetView, vSubY: btnRiserMode)
         designer.addAlignment(vView: btnBack,      vAlignX: .leftEven, vAlignY: .above,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnRiserMode, vSubY: btnRiserMode)
         designer.addAlignment(vView: btnQuit,      vAlignX: .rightOf,  vAlignY: .above,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnBack,      vSubY: btnRiserMode)
         

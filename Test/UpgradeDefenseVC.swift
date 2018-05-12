@@ -44,12 +44,12 @@ class UpgradeDefenseVC: UIViewController
         let vShieldsX = UIScreen.main.bounds.width * 0.23
         
         // Add buttons
-        btnSelect = designer.addButton(vTitle: "💥 Select", vAlignText: .center)
-        btnBack   = designer.addButton(vTitle: "Back", vAlignText: .center)
-        btnRemove = designer.addButton(vTitle: "❌ Remove", vAlignText: .center)
-        btnRepair = designer.addButton(vTitle: "☢️ Repair", vAlignText: .center)
+        btnSelect  = designer.addButton(vTitle: "💥 Select", vAlignText: .center)
+        btnBack    = designer.addButton(vTitle: "Back", vAlignText: .center)
+        btnRemove  = designer.addButton(vTitle: "❌ Remove", vAlignText: .center)
+        btnRepair  = designer.addButton(vTitle: "☢️ Repair", vAlignText: .center)
         // Add Labels
-        lblHUD    = designer.addLabel(vTitle: "This is the HUD", vAlignText: .center, vInvertColors: false, vhasFrame: false)
+        lblHUD     = designer.addLabel(vTitle: "This is the HUD", vAlignText: .center, vInvertColors: false, vhasFrame: false)
         lblWeapon  = designer.addLabel(vTitle: "Iodone Laser 20Kb", vAlignText: .center, vInvertColors: false, vhasFrame: false)
         lblShields = designer.addLabel(vTitle: "Shields",           vAlignText: .center, vInvertColors: false, vhasFrame: true)
         lblReload  = designer.addLabel(vTitle: "Reload",            vAlignText: .center, vInvertColors: false, vhasFrame: true)

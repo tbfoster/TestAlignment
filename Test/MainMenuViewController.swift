@@ -34,7 +34,7 @@ class MainMenuViewController: UIViewController
         btnHud        = designer.addButton(vTitle: "Hud Menu", vAlignText: .center)
             
         // Add Alignments
-        designer.addAlignment(vView: lblHUD,        vAlignX: .center, vAlignY: .top,    vWidth: 200, vHeight: 30,  vSubX: nil, vSubY: nil)
+        designer.addAlignment(vView: lblHUD,        vAlignX: .center, vAlignY: .top,    vWidth: 200, vHeight: 30, vSubX: nil, vSubY: nil)
         designer.addAlignment(vView: btnUpgDefense, vAlignX: .center, vAlignY: .center, vWidth: 300, vHeight: 75, vSubX: nil, vSubY: nil)
         designer.addAlignment(vView: btnAddDefense, vAlignX: .center, vAlignY: .above,  vWidth: 300, vHeight: 75, vSubX: nil, vSubY: btnUpgDefense)
         designer.addAlignment(vView: btnHud,        vAlignX: .center, vAlignY: .below,  vWidth: 300, vHeight: 75, vSubX: nil, vSubY: btnUpgDefense)
@@ -43,7 +43,6 @@ class MainMenuViewController: UIViewController
         btnAddDefense.addTarget(self, action: #selector(handleAddDefenseMenu(button:)), for: .touchUpInside)
         btnUpgDefense.addTarget(self, action: #selector(handleUpgDefenseMenu(button:)), for: .touchUpInside)
         btnHud.addTarget(self, action: #selector(handleHudMenu(button:)), for: .touchUpInside)
-        
     }
     //**************************************************************************
     @objc func handleAddDefenseMenu(button: UIButton) {

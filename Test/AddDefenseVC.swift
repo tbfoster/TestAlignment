@@ -40,8 +40,6 @@ class AddDefenseVC: UIViewController
         let vSelectX = UIScreen.main.bounds.width * 0.72
         let vSelectY = UIScreen.main.bounds.height * 0.50
         
-        let vWeapX = UIScreen.main.bounds.width * 0.69
-        
         let vNextX = UIScreen.main.bounds.width * 0.12
         let vNextY = vSelectY / 2
         
@@ -61,7 +59,7 @@ class AddDefenseVC: UIViewController
         btnRiser  = designer.addButton(vTitle: "Add Riser", vAlignText: .center)
         // Add Labels
         lblHUD    = designer.addLabel(vTitle: "This is the HUD", vAlignText: .center, vInvertColors: false, vhasFrame: false)
-        lblWeapon  = designer.addLabel(vTitle: "Iodone Laser 20Kb", vAlignText: .center, vInvertColors: false, vhasFrame: false)
+        lblWeapon  = designer.addLabel(vTitle: "Iodone Laser 20Kb 💰 300", vAlignText: .center, vInvertColors: false, vhasFrame: false)
         lblInvent  = designer.addLabel(vTitle: "Inventory 9 of 31", vAlignText: .center, vInvertColors: false, vhasFrame: false)
         lblShields = designer.addLabel(vTitle: "Shields",           vAlignText: .center, vInvertColors: false, vhasFrame: true)
         lblReload  = designer.addLabel(vTitle: "Reload",            vAlignText: .center, vInvertColors: false, vhasFrame: true)
@@ -82,8 +80,8 @@ class AddDefenseVC: UIViewController
         designer.addAlignment(vView: btnBack,   vAlignX: .rightOf, vAlignY: .above,  vWidth: vBackX,   vHeight: vDefaultY, vSubX: btnPrev,   vSubY: btnSelect)
         designer.addAlignment(vView: btnRiser,  vAlignX: .rightOf, vAlignY: .above,  vWidth: vRiserX,  vHeight: vDefaultY, vSubX: btnBack,   vSubY: btnSelect)
         
-        designer.addAlignment(vView: lblWeapon, vAlignX: .center,  vAlignY: .aboveInside, vWidth: vWeapX, vHeight: 0, vSubX: nil, vSubY: btnSelect)
-        designer.addAlignment(vView: lblInvent, vAlignX: .center,  vAlignY: .belowInside, vWidth: 0,      vHeight: 0, vSubX: nil, vSubY: btnSelect)
+        designer.addAlignment(vView: lblWeapon, vAlignX: .center,  vAlignY: .aboveInside, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: btnSelect)
+        designer.addAlignment(vView: lblInvent, vAlignX: .center,  vAlignY: .belowInside, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: btnSelect)
         
         designer.addAlignment(vView: lblReload,  vAlignX: .center,  vAlignY: .below, vWidth: vShieldsX, vHeight: vDefaultY, vSubX: nil,       vSubY: btnSelect)
         designer.addAlignment(vView: lblShields, vAlignX: .leftOf,  vAlignY: .below, vWidth: vShieldsX, vHeight: vDefaultY, vSubX: lblReload, vSubY: btnSelect)
@@ -99,6 +97,39 @@ class AddDefenseVC: UIViewController
         btnBack.addTarget(self, action: #selector(handleBackButton(button:)), for: .touchUpInside)
         btnNext.addTarget(self, action: #selector(handleNextButton(button:)), for: .touchUpInside)
         btnPrev.addTarget(self, action: #selector(handlePrevButton(button:)), for: .touchUpInside)
+        
+        initButtonValues()
+    }
+    //**************************************************************************
+    func initButtonValues()
+    {
+        disableButton(vView: btnSelect)
+        disableLabel(vView: lblWeapon)
+        disableLabel(vView: lblInvent)
+    }
+    //**************************************************************************
+    func enableButton(vView: UIButton)
+    {
+        vView.isEnabled = true
+        vView.setTitleColor(AppColor.enabled , for: .normal)
+    }
+    //**************************************************************************
+    func disableButton(vView: UIButton)
+    {
+        vView.isEnabled = false
+        vView.setTitleColor(AppColor.disabled , for: .normal)
+    }
+    //**************************************************************************
+    func enableLabel(vView: UILabel)
+    {
+        //vView.isEnabled = false
+        vView.textColor = AppColor.enabled
+    }
+    //**************************************************************************
+    func disableLabel(vView: UILabel)
+    {
+        //vView.isEnabled = false
+        vView.textColor = AppColor.disabled
     }
     //**************************************************************************
     @objc func handleBackButton(button: UIButton) {
@@ -109,11 +140,20 @@ class AddDefenseVC: UIViewController
     @objc func handleNextButton(button: UIButton) {
         pageControl.currentPage += 1
         lblWeapon.text = defenseNamesAdd[pageControl.currentPage]
+        
+        enableButton(vView: btnSelect)
+        enableLabel(vView: lblWeapon)
+        enableLabel(vView: lblInvent)
+        
     }
     //**************************************************************************
     @objc func handlePrevButton(button: UIButton) {
         pageControl.currentPage -= 1
         lblWeapon.text = defenseNamesAdd[pageControl.currentPage]
+        
+        disableButton(vView: btnSelect)
+        disableLabel(vView: lblWeapon)
+        disableLabel(vView: lblInvent)
     }
     //**************************************************************************
 }

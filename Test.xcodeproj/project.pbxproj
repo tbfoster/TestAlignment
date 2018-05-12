@@ -12,7 +12,6 @@
 		0531FD6F20A54B7300983647 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531FD6E20A54B7300983647 /* MainMenuViewController.swift */; };
 		0531FD7320A54D8300983647 /* UIDesigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531FD7220A54D8300983647 /* UIDesigner.swift */; };
 		0540328A20A2A3B600431F77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0540328920A2A3B600431F77 /* AppDelegate.swift */; };
-		0540328C20A2A3B700431F77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0540328B20A2A3B700431F77 /* ViewController.swift */; };
 		0540329120A2A3B800431F77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0540329020A2A3B800431F77 /* Assets.xcassets */; };
 		05446F6E20A6BDA600E84864 /* HudVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05446F6D20A6BDA600E84864 /* HudVC.swift */; };
 /* End PBXBuildFile section */
@@ -24,7 +23,6 @@
 		0531FD7220A54D8300983647 /* UIDesigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDesigner.swift; sourceTree = "<group>"; };
 		0540328620A2A3B600431F77 /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0540328920A2A3B600431F77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0540328B20A2A3B700431F77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0540329020A2A3B800431F77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0540329520A2A3B800431F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05446F6D20A6BDA600E84864 /* HudVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HudVC.swift; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 				0540328920A2A3B600431F77 /* AppDelegate.swift */,
 				0540329020A2A3B800431F77 /* Assets.xcassets */,
 				0540329520A2A3B800431F77 /* Info.plist */,
-				0540328B20A2A3B700431F77 /* ViewController.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -143,7 +140,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				0531FD6F20A54B7300983647 /* MainMenuViewController.swift in Sources */,
-				0540328C20A2A3B700431F77 /* ViewController.swift in Sources */,
 				0531FD7320A54D8300983647 /* UIDesigner.swift in Sources */,
 				0531FD6B20A54A6500983647 /* UpgradeDefenseVC.swift in Sources */,
 				05446F6E20A6BDA600E84864 /* HudVC.swift in Sources */,

@@ -20,9 +20,11 @@ enum alignY
 //**********************************************************
 struct AppColor {
     static let primary  = UIColor(red: 0.4392156863, green: 0.7490196078, blue: 0.6509803922, alpha: 1)
-    static let disabled = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1)
-    static let background = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1) // TODO
-    static let labelFrame = UIColor(red: 209, green: 32, blue: 69, alpha: 1)
+    static let enabled  = UIColor(red: 0.4392156863, green: 0.7490196078, blue: 0.6509803922, alpha: 1)
+    static let disabled = UIColor.red
+    
+    static let background = UIColor.green
+    static let labelFrame = UIColor.lightGray
 }
 //**********************************************************
 class UIDesigner
