@@ -9,7 +9,7 @@ enum alignText
 enum alignX
 {
     case
-    left, right, center, rightOf, leftOf
+    left, right, center, rightOf, leftOf, leftInside
 }
 //**********************************************************
 enum alignY
@@ -22,6 +22,7 @@ struct AppColor {
     static let primary  = UIColor(red: 0.4392156863, green: 0.7490196078, blue: 0.6509803922, alpha: 1)
     static let disabled = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1)
     static let background = UIColor(red: 209/255, green: 33/255, blue: 70/255, alpha: 1) // TODO
+    static let labelFrame = UIColor(red: 209, green: 32, blue: 69, alpha: 1)
 }
 //**********************************************************
 class UIDesigner
@@ -62,12 +63,27 @@ class UIDesigner
         addAlignment(vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
     }
     //**********************************************************
-    func addLabel(vTitle: String, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
+    func addLabel(vTitle: String, vTag: Int, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?, vInvertColors: Bool, vhasFrame: Bool)
     {
         let vButton = UILabel()
         vButton.text = vTitle
         vButton.textAlignment = .center
-        vButton.textColor = AppColor.primary
+        if(vInvertColors == true)
+        {
+            vButton.textColor = UIColor.black
+            vButton.backgroundColor = AppColor.primary
+        }
+        else
+        {
+            vButton.textColor = AppColor.primary
+            vButton.backgroundColor = UIColor.black
+        }
+        if(vhasFrame == true)
+        {
+            vButton.layer.borderColor = AppColor.labelFrame.cgColor
+            vButton.layer.borderWidth = 3
+            vButton.layer.cornerRadius = 10
+        }
         vButton.font = font
         vButton.adjustsFontSizeToFitWidth = true
         vButton.tag = vTag
@@ -87,6 +103,26 @@ class UIDesigner
         vButton.setProgress(vProgress, animated: false)
         view.addSubview(vButton)
         addAlignment(vButton: vButton, vAlignX: vAlignX, vAlignY: vAlignY, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
+    }
+    //**********************************************************
+    func addButton2(vTitle: String, vTag: Int, vAlignText: alignText) -> UIButton
+    {
+        let vButton = UIButton()
+        vButton.tag = vTag
+        vButton.setTitle(vTitle, for: .normal)
+        vButton.titleLabel?.font = font
+        vButton.layer.borderColor = AppColor.primary.cgColor
+        vButton.layer.borderWidth = 3
+        vButton.layer.cornerRadius = 10
+        vButton.translatesAutoresizingMaskIntoConstraints = false
+        switch(vAlignText)
+        {
+        case .bottom: vButton.contentVerticalAlignment = UIControlContentVerticalAlignment.bottom; break
+        case .top:    vButton.contentVerticalAlignment = UIControlContentVerticalAlignment.top; break
+        case .center: break
+        }
+        view.addSubview(vButton)
+        return vButton
     }
     //**********************************************************
     func addButton(vTitle: String, vTag: Int, vAlignText: alignText, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: Int?, vSubY: Int?)
@@ -120,6 +156,7 @@ class UIDesigner
         case .center:       constraints.append(alignCenterX(vView: vButton)); break
         case .rightOf:      constraints.append(alignRightOf(vView: vButton, superView: view.viewWithTag(vSubX!)!)); break
         case .leftOf:       constraints.append(alignLeftOf(vView: vButton, superView: view.viewWithTag(vSubX!)!)); break
+        case .leftInside:   constraints.append(alignLeftInside(vView: vButton, superView: view.viewWithTag(vSubX!)!)); break
         }
         
         switch vAlignY
@@ -196,6 +233,7 @@ class UIDesigner
         let vConstraint = NSLayoutConstraint(item: vView, attribute: .rightMargin, relatedBy: .equal, toItem: view, attribute: .rightMargin, multiplier: 1, constant: 5)
         return vConstraint
     }
+    
     //**********************************************************
     func alignTop(vView: UIView) -> NSLayoutConstraint
     {
@@ -208,17 +246,25 @@ class UIDesigner
         let vConstraint = NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
         return vConstraint
     }
+    
+    
     //**********************************************************
     func alignAboveInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: 0)
+        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: 5)
     }
     //**********************************************************
     func alignBelowInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: 0)
+        return NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: -5)
     }
     //**********************************************************
+    //**********************************************************
+    func alignLeftInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
+    {
+        let vConstraint = NSLayoutConstraint(item: vView, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1, constant: 10)
+        return vConstraint
+    }
 }
 extension UILabel {
     

@@ -26,7 +26,7 @@ class MainMenuViewController: UIViewController
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         
-        designer.addLabel(vTitle: "This is the HUD", vTag: 0, vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: 0, vSubY: 0)
+        designer.addLabel(vTitle: "This is the HUD", vTag: 0, vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: 0, vSubY: 0, vInvertColors: false, vhasFrame: false)
         
         designer.addButton(vTitle: "Add Defense",      vTag: BTN_MAIN_ADD_DEFENSE,     vAlignText: .center, vAlignX: .center, vAlignY: .center, vWidth: 300, vHeight: 100, vSubX: nil, vSubY: nil)
         designer.addButton(vTitle: "Upgrade Defense",  vTag: BTN_MAIN_UPGRADE_DEFENSE, vAlignText: .center, vAlignX: .center, vAlignY: .below,  vWidth: 300, vHeight: 100, vSubX: nil, vSubY: BTN_MAIN_ADD_DEFENSE)
