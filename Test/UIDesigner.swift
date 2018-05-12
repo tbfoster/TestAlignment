@@ -9,7 +9,7 @@ enum alignText
 enum alignX
 {
     case
-    left, right, center, rightOf, leftOf, leftInside, leftEven
+    left, right, center, rightOf, leftOf, leftInside, leftEven, rightInside
 }
 //**********************************************************
 enum alignY
@@ -29,12 +29,12 @@ struct AppColor {
 //**********************************************************
 class UIDesigner
 {
-    var view: UIView
+    var view = UIView()
     var font = UIFont()
     var defaultButtonHeight: CGFloat = 0
     
     //**********************************************************
-    init(vView: UIView)
+    func initView(vView: UIView)
     {
         view = vView
         switch UIDevice.current.userInterfaceIdiom
@@ -109,9 +109,19 @@ class UIDesigner
         let vButton = UIButton()
         vButton.setTitle(vTitle, for: .normal)
         vButton.titleLabel?.font = font
-        vButton.layer.borderColor = AppColor.primary.cgColor
+        vButton.setTitleColor(AppColor.primary, for: .normal)
+        vButton.setTitleColor(AppColor.disabled, for: .disabled)
+        
+        
+        vButton.layer.cornerRadius = 8
         vButton.layer.borderWidth = 3
-        vButton.layer.cornerRadius = 10
+        vButton.layer.borderColor = AppColor.primary.cgColor
+        
+//        vButton.layer.shadowColor = UIColor.gray.cgColor
+//        vButton.layer.shadowOpacity = 1.0
+//        vButton.layer.shadowRadius = 3.0
+//        vButton.layer.shadowOffset = CGSize(width: 0, height: 3)
+        
         vButton.translatesAutoresizingMaskIntoConstraints = false
         switch(vAlignText)
         {
@@ -133,6 +143,7 @@ class UIDesigner
         case .right:        constraints.append(alignRight(vView: vView)); break
         case .center:       constraints.append(alignCenterX(vView: vView)); break
         case .rightOf:      constraints.append(alignRightOf(vView: vView,     superView: vSubX!)); break
+        case .rightInside:  constraints.append(alignRightInside(vView: vView, superView: vSubX!)); break
         case .leftOf:       constraints.append(alignLeftOf(vView: vView,      superView: vSubX!)); break
         case .leftInside:   constraints.append(alignLeftInside(vView: vView,  superView: vSubX!)); break
         case .leftEven:     constraints.append(alignLeftEven(vView: vView,    superView: vSubX!)); break
@@ -246,6 +257,39 @@ class UIDesigner
         let vConstraint = NSLayoutConstraint(item: vView, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1, constant: 0)
         return vConstraint
     }
+    //**********************************************************
+    func alignRightInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
+    {
+        let vConstraint = NSLayoutConstraint(item: vView, attribute: .right, relatedBy: .equal, toItem: superView, attribute: .right, multiplier: 1, constant: -10)
+        return vConstraint
+    }
+    //**************************************************************************
+    func enable(vView: UIButton)
+    {
+        vView.isEnabled = true
+        vView.setTitleColor(AppColor.enabled , for: .normal)
+        vView.layer.borderColor = AppColor.primary.cgColor
+    }
+    //**************************************************************************
+    func disable(vView: UIButton)
+    {
+        vView.isEnabled = false
+        vView.setTitleColor(AppColor.disabled , for: .normal)
+        vView.layer.borderColor = AppColor.disabled.cgColor
+    }
+    //**************************************************************************
+    func enable(vView: UILabel)
+    {
+        //vView.isEnabled = false
+        vView.textColor = AppColor.enabled
+    }
+    //**************************************************************************
+    func disable(vView: UILabel)
+    {
+        //vView.isEnabled = false
+        vView.textColor = AppColor.disabled
+    }
+    
 }
 //**********************************************************
 extension UILabel {

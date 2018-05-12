@@ -8,6 +8,8 @@ enum menuReturnTypes
 //**************************************************************************
 class MainMenuViewController: UIViewController
 {
+    var uid = UIDesigner()
+    
     var lblHUD = UILabel()
     var btnAddDefense = UIButton()
     var btnUpgDefense = UIButton()
@@ -19,7 +21,7 @@ class MainMenuViewController: UIViewController
         title = "Main Menu"
         view.backgroundColor = .black
         
-        let designer = UIDesigner.init(vView: view)
+        uid.initView(vView: view)
         
         let titleAttributes = [NSAttributedStringKey.foregroundColor: AppColor.primary]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
@@ -27,17 +29,17 @@ class MainMenuViewController: UIViewController
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         
-        lblHUD = designer.addLabel(vTitle: "This is the HUD", vAlignText: .center, vInvertColors: false, vhasFrame: false)
+        lblHUD = uid.addLabel(vTitle: "This is the HUD", vAlignText: .center, vInvertColors: false, vhasFrame: false)
         
-        btnAddDefense = designer.addButton(vTitle: "Add Defense    ", vAlignText: .center)
-        btnUpgDefense = designer.addButton(vTitle: "Upgrade Defense", vAlignText: .center)
-        btnHud        = designer.addButton(vTitle: "Hud Menu", vAlignText: .center)
+        btnAddDefense = uid.addButton(vTitle: "Add Defense    ", vAlignText: .center)
+        btnUpgDefense = uid.addButton(vTitle: "Upgrade Defense", vAlignText: .center)
+        btnHud        = uid.addButton(vTitle: "Hud Menu", vAlignText: .center)
             
         // Add Alignments
-        designer.addAlignment(vView: lblHUD,        vAlignX: .center, vAlignY: .top,    vWidth: 200, vHeight: 30, vSubX: nil, vSubY: nil)
-        designer.addAlignment(vView: btnUpgDefense, vAlignX: .center, vAlignY: .center, vWidth: 300, vHeight: 75, vSubX: nil, vSubY: nil)
-        designer.addAlignment(vView: btnAddDefense, vAlignX: .center, vAlignY: .above,  vWidth: 300, vHeight: 75, vSubX: nil, vSubY: btnUpgDefense)
-        designer.addAlignment(vView: btnHud,        vAlignX: .center, vAlignY: .below,  vWidth: 300, vHeight: 75, vSubX: nil, vSubY: btnUpgDefense)
+        uid.addAlignment(vView: lblHUD,        vAlignX: .center, vAlignY: .top,    vWidth: 200, vHeight: 30, vSubX: nil, vSubY: nil)
+        uid.addAlignment(vView: btnUpgDefense, vAlignX: .center, vAlignY: .center, vWidth: 300, vHeight: 75, vSubX: nil, vSubY: nil)
+        uid.addAlignment(vView: btnAddDefense, vAlignX: .center, vAlignY: .above,  vWidth: 300, vHeight: 75, vSubX: nil, vSubY: btnUpgDefense)
+        uid.addAlignment(vView: btnHud,        vAlignX: .center, vAlignY: .below,  vWidth: 300, vHeight: 75, vSubX: nil, vSubY: btnUpgDefense)
         
         // Add Actions
         btnAddDefense.addTarget(self, action: #selector(handleAddDefenseMenu(button:)), for: .touchUpInside)

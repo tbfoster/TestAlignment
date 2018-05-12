@@ -4,6 +4,8 @@ import UIKit
 //**************************************************************************
 class HudVC: UIViewController
 {
+    var uid = UIDesigner()
+    
     var btnBack = UIButton()
     var btnQuit = UIButton()
     var btnRiserMode = UIButton()
@@ -18,7 +20,7 @@ class HudVC: UIViewController
         super.viewDidLoad()
         view.backgroundColor = .black
         
-        let designer = UIDesigner.init(vView: view)
+        uid.initView(vView: view)
         
         let titleAttributes = [NSAttributedStringKey.foregroundColor: AppColor.primary]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
@@ -32,24 +34,24 @@ class HudVC: UIViewController
         let vDefaultY = UIScreen.main.bounds.width * 0.10
         
         // Add buttons
-        btnBack      = designer.addButton(vTitle: "Back", vAlignText: .center)
-        btnQuit      = designer.addButton(vTitle: "Quit", vAlignText: .center)
-        btnRiserMode = designer.addButton(vTitle: "Riser Mode Off", vAlignText: .center)
-        btnResetView = designer.addButton(vTitle: "Reset View", vAlignText: .center)
-        btnZoomIn    = designer.addButton(vTitle: "Zoom ++", vAlignText: .center)
-        btnZoomOut   = designer.addButton(vTitle: "Zoom --", vAlignText: .center)
+        btnBack      = uid.addButton(vTitle: "Back", vAlignText: .center)
+        btnQuit      = uid.addButton(vTitle: "Quit", vAlignText: .center)
+        btnRiserMode = uid.addButton(vTitle: "Riser Mode Off", vAlignText: .center)
+        btnResetView = uid.addButton(vTitle: "Reset View", vAlignText: .center)
+        btnZoomIn    = uid.addButton(vTitle: "Zoom ++", vAlignText: .center)
+        btnZoomOut   = uid.addButton(vTitle: "Zoom --", vAlignText: .center)
         // Add Labels
-        lblHUD    = designer.addLabel(vTitle: "This is the HUD", vAlignText: .center, vInvertColors: false, vhasFrame: false)
+        lblHUD    = uid.addLabel(vTitle: "This is the HUD", vAlignText: .center, vInvertColors: false, vhasFrame: false)
         
         // Align all components
-        designer.addAlignment(vView: lblHUD,    vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: nil, vSubY: nil)
+        uid.addAlignment(vView: lblHUD,    vAlignX: .center, vAlignY: .top, vWidth: 200, vHeight: 30, vSubX: nil, vSubY: nil)
         
-        designer.addAlignment(vView: btnRiserMode, vAlignX: .center,   vAlignY: .center, vWidth: vRiserModeX, vHeight: vDefaultY, vSubX: nil,          vSubY: nil)
-        designer.addAlignment(vView: btnResetView, vAlignX: .center,   vAlignY: .below,  vWidth: vResetViewX, vHeight: vDefaultY, vSubX: nil,          vSubY: btnRiserMode)
-        designer.addAlignment(vView: btnZoomIn,    vAlignX: .leftOf,   vAlignY: .below,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnResetView, vSubY: btnRiserMode)
-        designer.addAlignment(vView: btnZoomOut,   vAlignX: .rightOf,  vAlignY: .below,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnResetView, vSubY: btnRiserMode)
-        designer.addAlignment(vView: btnBack,      vAlignX: .leftEven, vAlignY: .above,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnRiserMode, vSubY: btnRiserMode)
-        designer.addAlignment(vView: btnQuit,      vAlignX: .rightOf,  vAlignY: .above,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnBack,      vSubY: btnRiserMode)
+        uid.addAlignment(vView: btnRiserMode, vAlignX: .center,   vAlignY: .center, vWidth: vRiserModeX, vHeight: vDefaultY, vSubX: nil,          vSubY: nil)
+        uid.addAlignment(vView: btnResetView, vAlignX: .center,   vAlignY: .below,  vWidth: vResetViewX, vHeight: vDefaultY, vSubX: nil,          vSubY: btnRiserMode)
+        uid.addAlignment(vView: btnZoomIn,    vAlignX: .leftOf,   vAlignY: .below,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnResetView, vSubY: btnRiserMode)
+        uid.addAlignment(vView: btnZoomOut,   vAlignX: .rightOf,  vAlignY: .below,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnResetView, vSubY: btnRiserMode)
+        uid.addAlignment(vView: btnBack,      vAlignX: .leftEven, vAlignY: .above,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnRiserMode, vSubY: btnRiserMode)
+        uid.addAlignment(vView: btnQuit,      vAlignX: .rightOf,  vAlignY: .above,  vWidth: vBackX,      vHeight: vDefaultY, vSubX: btnBack,      vSubY: btnRiserMode)
         
         // Add Actions
         btnBack.addTarget(self, action: #selector(handleBackButton(button:)), for: .touchUpInside)
