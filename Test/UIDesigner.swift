@@ -9,7 +9,7 @@ enum alignText
 enum alignX
 {
     case
-    left, right, center, rightOf, leftOf, leftInside
+    left, right, center, rightOf, leftOf, leftInside, leftEven
 }
 //**********************************************************
 enum alignY
@@ -133,6 +133,7 @@ class UIDesigner
         case .rightOf:      constraints.append(alignRightOf(vView: vView,     superView: vSubX!)); break
         case .leftOf:       constraints.append(alignLeftOf(vView: vView,      superView: vSubX!)); break
         case .leftInside:   constraints.append(alignLeftInside(vView: vView,  superView: vSubX!)); break
+        case .leftEven:     constraints.append(alignLeftEven(vView: vView,    superView: vSubX!)); break
         }
         
         switch vAlignY
@@ -209,7 +210,6 @@ class UIDesigner
         let vConstraint = NSLayoutConstraint(item: vView, attribute: .rightMargin, relatedBy: .equal, toItem: view, attribute: .rightMargin, multiplier: 1, constant: 5)
         return vConstraint
     }
-    
     //**********************************************************
     func alignTop(vView: UIView) -> NSLayoutConstraint
     {
@@ -236,6 +236,12 @@ class UIDesigner
     func alignLeftInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
         let vConstraint = NSLayoutConstraint(item: vView, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1, constant: 10)
+        return vConstraint
+    }
+    //**********************************************************
+    func alignLeftEven(vView: UIView, superView: UIView) -> NSLayoutConstraint
+    {
+        let vConstraint = NSLayoutConstraint(item: vView, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1, constant: 0)
         return vConstraint
     }
 }

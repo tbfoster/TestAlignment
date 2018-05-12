@@ -1,23 +1,5 @@
 import UIKit
 
-// Menu Main
-let BTN_AD_RETURN        = 13000
-let BTN_AD_ADD_RISER     = 13001
-let BTN_AD_ADD           = 13002
-let BTN_AD_NEXT          = 13003
-let BTN_AD_PREV          = 13004
-let BTN_AD_INVENTORY     = 13005
-let BTN_AD_SHIELDS       = 13006
-let BTN_AD_RELOAD        = 13007
-let BTN_AD_POWER         = 13008
-let BTN_AD_SHIELDSL      = 13009
-let BTN_AD_RELOADL       = 13010
-let BTN_AD_POWERL        = 13011
-let BTN_AD_LBL_WEAPON    = 13012
-let BTN_AD_PAGE_VIEW     = 13013
-
-var btnReturn = UIButton()
-
 let defenseNamesAdd:[Int: String] = [0:"Chlorine Laser 20kW", 1:"Iodine Laser 80kW", 2:"Argon Plasma 1.5 MW", 3:"SSM-Pounder Mark 1", 4:"Air Missiles - LFC"]
 
 //**************************************************************************
@@ -55,21 +37,19 @@ class AddDefenseVC: UIViewController
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         
-        let vSelectX = UIScreen.main.bounds.width * 0.70
-        let vSelectY = UIScreen.main.bounds.height * 0.60
+        let vSelectX = UIScreen.main.bounds.width * 0.72
+        let vSelectY = UIScreen.main.bounds.height * 0.50
         
         let vWeapX = UIScreen.main.bounds.width * 0.69
         
         let vNextX = UIScreen.main.bounds.width * 0.12
         let vNextY = vSelectY / 2
         
-        let vProgX = UIScreen.main.bounds.height * 0.25
-        let vProgXL = UIScreen.main.bounds.height * 0.28
-        let vProgY = UIScreen.main.bounds.height * 0.05
-        let vProgYInd = UIScreen.main.bounds.height * 0.02
+        let vProgX = UIScreen.main.bounds.height * 0.28
+        let vProgY = UIScreen.main.bounds.height * 0.02
         
         let vBackX   = UIScreen.main.bounds.width * 0.15
-        let vRiserX   = UIScreen.main.bounds.width * 0.54
+        let vRiserX   = UIScreen.main.bounds.width * 0.56
         let vDefaultY = UIScreen.main.bounds.width * 0.08
         let vShieldsX = UIScreen.main.bounds.width * 0.23
         
@@ -109,9 +89,9 @@ class AddDefenseVC: UIViewController
         designer.addAlignment(vView: lblShields, vAlignX: .leftOf,  vAlignY: .below, vWidth: vShieldsX, vHeight: vDefaultY, vSubX: lblReload, vSubY: btnSelect)
         designer.addAlignment(vView: lblPower,   vAlignX: .rightOf, vAlignY: .below, vWidth: vShieldsX, vHeight: vDefaultY, vSubX: lblReload, vSubY: btnSelect)
         
-        designer.addAlignment(vView: lblShieldsProgress, vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgXL, vHeight: vProgYInd, vSubX: lblShields, vSubY: lblShields)
-        designer.addAlignment(vView: lblReloadProgress,  vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgXL, vHeight: vProgYInd, vSubX: lblReload,  vSubY: lblReload)
-        designer.addAlignment(vView: lblPowerProgress,   vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgXL, vHeight: vProgYInd, vSubX: lblPower,   vSubY: lblPower)
+        designer.addAlignment(vView: lblShieldsProgress, vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgX, vHeight: vProgY, vSubX: lblShields, vSubY: lblShields)
+        designer.addAlignment(vView: lblReloadProgress,  vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgX, vHeight: vProgY, vSubX: lblReload,  vSubY: lblReload)
+        designer.addAlignment(vView: lblPowerProgress,   vAlignX: .leftInside, vAlignY: .belowInside, vWidth: vProgX, vHeight: vProgY, vSubX: lblPower,   vSubY: lblPower)
         
         designer.addAlignment(vView: pageControl, vAlignX: .center, vAlignY: .bottom, vWidth: 0, vHeight: 0, vSubX: nil, vSubY: nil)
         
