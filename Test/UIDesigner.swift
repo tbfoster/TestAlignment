@@ -92,6 +92,39 @@ class UIDesigner
         return vLabel
     }
     //**********************************************************
+    func addProgressBar2(vProgress: Float) -> UILabel
+    {
+        let vLabel = UILabel()
+        vLabel.text = "Test"
+        vLabel.textAlignment = .center
+        
+            vLabel.textColor = AppColor.primary
+            vLabel.backgroundColor = UIColor.black
+        
+            vLabel.layer.borderColor = AppColor.labelFrame.cgColor
+            vLabel.layer.borderWidth = 3
+            vLabel.layer.cornerRadius = 10
+
+        vLabel.font = font
+        vLabel.adjustsFontSizeToFitWidth = true
+        vLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(vLabel)
+        
+        let vProgressBar = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
+        vProgressBar.progressViewStyle = .default
+        vProgressBar.trackTintColor = AppColor.primary
+        vProgressBar.progressTintColor = UIColor.red
+        vProgressBar.translatesAutoresizingMaskIntoConstraints = false
+        vProgressBar.setProgress(vProgress, animated: false)
+        vLabel.addSubview(vProgressBar)
+        
+        
+        addAlignment(vView: vProgressBar,  vAlignX: .leftInside, vAlignY: .belowInside, vWidth: 80, vHeight: 40, vSubX: vLabel,  vSubY: vLabel)
+        vLabel.sendSubview(toBack: vProgressBar)
+        
+        return vLabel
+    }
+    //**********************************************************
     func addProgressBar(vProgress: Float) -> UIProgressView
     {
         let vProgressBar = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
