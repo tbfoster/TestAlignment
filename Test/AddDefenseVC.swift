@@ -10,22 +10,9 @@ class AddDefenseVC: UIViewController
     
     var btnSelect = UIButton()
     var btnSelect2 = UIButton()
-    var testCustom: UICustomProgressView
-//    var shields = ProgressBar()
-//
-//    var lblShields = UILabel()
-//    var lblShieldsMask = UILabel()
-//    var lblShieldsShade = UIView()
+    var testCustom = UICustomProgressView()
+    var testCustom2 = UICustomProgressView()
     
-    //**************************************************************************
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        testCustom = UICustomProgressView()
-        super.init(nibName: nil, bundle: nil)
-    }
-    //**************************************************************************
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     //**************************************************************************
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,12 +32,17 @@ class AddDefenseVC: UIViewController
         btnSelect2 = uid.addButton(vTitle: "Select2", vAlignText: .center)
         
         uid.align(vView: btnSelect,  horz: .center, vert: .topMargin, widthPct: 0.80, heightPct: 0.15, subX: nil, subY: nil)
-        uid.align(vView: btnSelect2, horz: .center, vert: .below,     widthPct: 0.80, heightPct: 0.08, subX: nil, subY: btnSelect)
+        uid.align(vView: btnSelect2, horz: .center, vert: .below,     widthPct: 0.40, heightPct: 0.08, subX: nil, subY: btnSelect)
         
         testCustom.initView()
         view.addSubview(testCustom)
-        testCustom.resize(vRect: CGRect(x: 0, y: 0, width: 50, height: 20), vSubView: btnSelect2)
-        testCustom.setProgress(vProgress: 0.45)
+        testCustom.resize(hAlign: .leftEven, vWidth: 0.30, vHeight: 0.10, vSubX: btnSelect2, vSubY: btnSelect2)
+        testCustom.setProgress(vProgress: 0.15)
+        
+        testCustom2.initView()
+        view.addSubview(testCustom2)
+        testCustom2.resize(hAlign: .rightOf, vWidth: 0.30, vHeight: 0.05, vSubX: btnSelect2, vSubY: btnSelect2)
+        testCustom2.setProgress(vProgress: 0.45)
         
         btnSelect.addTarget(self, action: #selector(handleSelect1Button(button:)), for: .touchUpInside)
         btnSelect2.addTarget(self, action: #selector(handleSelect2Button(button:)), for: .touchUpInside)

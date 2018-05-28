@@ -29,27 +29,12 @@ class UICustomProgressView: UIView
     var maskedProgressLabel = UILabel()
     var allSubViews = [String : UIView]()
     var viewMask = UIView()
-    //var rect = CGRect()
-    //var subView = UIView()
     
     //**************************************************************************
-    //init()
-    //{
-        //subView = vSubView
-        //rect = vRect
-//        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-//        initView()
-    //}
-    //**************************************************************************
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    //**************************************************************************
-    func resize(vRect: CGRect, vSubView: UIView)
+    func resize(hAlign: alignHorizontol, vWidth: CGFloat, vHeight: CGFloat, vSubX: UIView, vSubY: UIView)
     {
-        //rect = vRect
         self.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
-        addAllConstraints(vSubView: vSubView)
+        addAllConstraints(hAlign: hAlign, vWidth: vWidth, vHeight: vHeight, vSubX: vSubX, vSubY: vSubY)
         self.layoutIfNeeded()
         self.updateMask()
     }
@@ -97,7 +82,7 @@ class UICustomProgressView: UIView
         return NSLayoutConstraint.constraints(withVisualFormat: vFormat, options: [], metrics: nil, views: allSubViews)
     }
     //**************************************************************************
-    func addAllConstraints(vSubView: UIView)
+    func addAllConstraints(hAlign: alignHorizontol, vWidth: CGFloat, vHeight: CGFloat, vSubX: UIView, vSubY: UIView)
     {
         self.container.translatesAutoresizingMaskIntoConstraints = false
         self.progressBar.translatesAutoresizingMaskIntoConstraints = false
@@ -105,22 +90,36 @@ class UICustomProgressView: UIView
         self.maskedProgressLabel.translatesAutoresizingMaskIntoConstraints = false
         self.viewMask.translatesAutoresizingMaskIntoConstraints = false
         
-        //NSLayoutConstraint(item: vView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: vConstantWidth)
-        let vWidth = 0.25 * data.portraitScreenWidth
-        //widthPct * data.portraitScreenWidth
+        let cWidth = vWidth * data.portraitScreenWidth
+        let cHeight = vHeight * data.portraitScreenHeight
         
-        let vAlign = [NSLayoutConstraint(item: self.container, attribute: .left, relatedBy: .equal, toItem: vSubView, attribute: .left, multiplier: 1, constant: 0),
-                      NSLayoutConstraint(item: self.container, attribute: .top, relatedBy: .equal, toItem: vSubView, attribute: .bottom, multiplier: 1, constant: 1),
-                      NSLayoutConstraint(item: self.container, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: vWidth),
-                      NSLayoutConstraint(item: self.container, attribute: .height, relatedBy: .equal, toItem: vSubView, attribute: .height, multiplier: 1, constant: 0)
-                      ]
-        NSLayoutConstraint.activate(vAlign)
+        switch hAlign {
+        case .leftEven:
+            let vAlign = [NSLayoutConstraint(item: self.container, attribute: .left,   relatedBy: .equal, toItem: vSubX, attribute: .left,           multiplier: 1, constant: 0),
+                          NSLayoutConstraint(item: self.container, attribute: .top,    relatedBy: .equal, toItem: vSubY, attribute: .bottom,         multiplier: 1, constant: 1),
+                          NSLayoutConstraint(item: self.container, attribute: .width,  relatedBy: .equal, toItem: nil,   attribute: .notAnAttribute, multiplier: 1, constant: cWidth),
+                          NSLayoutConstraint(item: self.container, attribute: .height, relatedBy: .equal, toItem: nil,   attribute: .notAnAttribute, multiplier: 1, constant: cHeight)
+            ]
+//            for x in vAlign
+//            {
+//                data.landscapeConstraints.append(x)
+//                //data.portraitConstraints.append(x)
+//            }
+            NSLayoutConstraint.activate(vAlign)
+            break
+        case .rightOf:
+            //NSLayoutConstraint(item: vView, attribute: .leading, relatedBy: .equal, toItem: superView, attribute: .trailing, multiplier: 1, constant: screenConstant)
+            let vAlign = [NSLayoutConstraint(item: self.container, attribute: .leading, relatedBy: .equal, toItem: vSubX, attribute: .trailing, multiplier: 1, constant: 1),
+                          NSLayoutConstraint(item: self.container, attribute: .top,    relatedBy: .equal, toItem: vSubY,  attribute: .bottom,         multiplier: 1, constant: 1),
+                          NSLayoutConstraint(item: self.container, attribute: .width,  relatedBy: .equal, toItem: nil,    attribute: .notAnAttribute, multiplier: 1, constant: cWidth),
+                          NSLayoutConstraint(item: self.container, attribute: .height, relatedBy: .equal, toItem: nil,    attribute: .notAnAttribute, multiplier: 1, constant: cHeight)
+            ]
+            NSLayoutConstraint.activate(vAlign)
+            break
+        default:
+            break
+        }
         
-        // Container constraint
-//        containerHeightPadding = alignWithVisualFormat(vView: self.container, vFormat: "H:|-0-[container]-1-|") as NSArray
-//        containerWidthPadding  = alignWithVisualFormat(vView: self.container, vFormat: "V:|-0-[container]-1-|") as NSArray
-//        NSLayoutConstraint.activate(containerHeightPadding as! [NSLayoutConstraint])
-//        NSLayoutConstraint.activate(containerWidthPadding as! [NSLayoutConstraint])
         
         // ProgressBar constraint
         NSLayoutConstraint.activate(alignWithVisualFormat(vView: self.container, vFormat: "H:|[progressBar]"))
