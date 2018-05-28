@@ -6,82 +6,91 @@ enum alignText
     case bottom, top, center
 }
 //**********************************************************
-enum alignX
+enum alignHorizontol
 {
     case
     left, right, center, rightOf, leftOf, leftInside, leftEven, rightInside
 }
 //**********************************************************
-enum alignY
+enum alignVertical
 {
     case
-    top, bottom, center, below, above, aboveInside, belowInside
+    top, bottom, center, below, above, aboveInside, belowInside, topMargin
 }
 //**********************************************************
 struct AppColor {
-    static let primary  = UIColor(red: 0.4392156863, green: 0.7490196078, blue: 0.6509803922, alpha: 1)
-    static let enabled  = UIColor(red: 0.4392156863, green: 0.7490196078, blue: 0.6509803922, alpha: 1)
-    static let disabled = UIColor.red
+    // Defaults
+    static let defaultGame              = UIColor(red: 0.4392156863, green: 0.7490196078, blue: 0.6509803922, alpha: 1)
+    static let defaultEnabled           = UIColor(red: 0.4392156863, green: 0.7490196078, blue: 0.6509803922, alpha: 1)
+    static let defaultDisabled          = UIColor.red
+    static let defaultFrame             = UIColor.lightGray
     
-    static let background = UIColor.green
-    static let labelFrame = UIColor.lightGray
+    // Progress Bars
+    static let progressText             = UIColor.yellow
+    static let progressBackground       = UIColor.black
+    static let progressTrack            = UIColor.lightGray
+    static let progressTint             = UIColor.blue
+    static let repairProgressTrack      = UIColor.lightGray
+    static let repairProgressTint       = UIColor.red
+    static let waveProgressTrack        = UIColor.lightGray
+    static let waveProgressTint         = UIColor.green
+    
+    // Labels
+    static let labelBackground          = UIColor.black
 }
 //**********************************************************
 class UIDesigner
 {
+    var data = Data.sharedInstance
+    
     var view = UIView()
     var font = UIFont()
-    var defaultButtonHeight: CGFloat = 0
+    var groupTag: Int = 10000
+    var screenConstant: CGFloat = 1
     
     //**********************************************************
-    func initView(vView: UIView)
+    func initView(vView: UIView, vGroupTag: Int)
     {
         view = vView
         switch UIDevice.current.userInterfaceIdiom
         {
         case .phone:
             font = UIFont.boldSystemFont(ofSize: 16)
+            screenConstant = 5
             break
         case .pad:
             font = UIFont.boldSystemFont(ofSize: 32)
+            screenConstant = 5
             break
         case .unspecified:
+            screenConstant = 1
             font = UIFont.boldSystemFont(ofSize: 16)
             break
         default:
             break
         }
+        groupTag = vGroupTag
     }
     //**********************************************************
-    func addPageControl(vStartPage: Int, vMaxPages: Int) -> UIPageControl
-    {
-        let vPageControl = UIPageControl()
-        vPageControl.currentPage = vStartPage
-        vPageControl.numberOfPages = vMaxPages
-        vPageControl.pageIndicatorTintColor = AppColor.primary
-        vPageControl.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(vPageControl)
-        return vPageControl
-    }
-    //**********************************************************
-    func addLabel(vTitle: String, vAlignText: alignText, vInvertColors: Bool, vhasFrame: Bool) -> UILabel
+    func addLabel(vTitle: String, vAlignText: alignText, vhasFrame: Bool) -> UILabel
     {
         let vLabel = UILabel()
+        vLabel.tag = groupTag
         vLabel.text = vTitle
         vLabel.textAlignment = .center
-        if(vInvertColors == true)
+        if(vhasFrame)
         {
-            vLabel.textColor = UIColor.black
-            vLabel.backgroundColor = AppColor.primary
+            vLabel.layer.cornerRadius = 8
+            vLabel.layer.borderWidth = 3
+            vLabel.layer.borderColor = UIColor.lightGray.cgColor
         }
-        else
-        {
-            vLabel.textColor = AppColor.primary
-            vLabel.backgroundColor = UIColor.black
-        }
+        
+        vLabel.textColor = AppColor.defaultGame
+        vLabel.backgroundColor = UIColor.clear
+        
         if(vhasFrame == true)
         {
-            vLabel.layer.borderColor = AppColor.labelFrame.cgColor
+            vLabel.layer.borderColor = AppColor.defaultFrame.cgColor
             vLabel.layer.borderWidth = 3
             vLabel.layer.cornerRadius = 10
         }
@@ -90,70 +99,20 @@ class UIDesigner
         vLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(vLabel)
         return vLabel
-    }
-    //**********************************************************
-    func addProgressBar2(vProgress: Float) -> UILabel
-    {
-        let vLabel = UILabel()
-        vLabel.text = "Test"
-        vLabel.textAlignment = .center
-        
-            vLabel.textColor = AppColor.primary
-            vLabel.backgroundColor = UIColor.black
-        
-            vLabel.layer.borderColor = AppColor.labelFrame.cgColor
-            vLabel.layer.borderWidth = 3
-            vLabel.layer.cornerRadius = 10
-
-        vLabel.font = font
-        vLabel.adjustsFontSizeToFitWidth = true
-        vLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(vLabel)
-        
-        let vProgressBar = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
-        vProgressBar.progressViewStyle = .default
-        vProgressBar.trackTintColor = AppColor.primary
-        vProgressBar.progressTintColor = UIColor.red
-        vProgressBar.translatesAutoresizingMaskIntoConstraints = false
-        vProgressBar.setProgress(vProgress, animated: false)
-        vLabel.addSubview(vProgressBar)
-        
-        
-        addAlignment(vView: vProgressBar,  vAlignX: .leftInside, vAlignY: .belowInside, vWidth: 80, vHeight: 40, vSubX: vLabel,  vSubY: vLabel)
-        vLabel.sendSubview(toBack: vProgressBar)
-        
-        return vLabel
-    }
-    //**********************************************************
-    func addProgressBar(vProgress: Float) -> UIProgressView
-    {
-        let vProgressBar = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
-        vProgressBar.progressViewStyle = .default
-        vProgressBar.trackTintColor = AppColor.primary
-        vProgressBar.progressTintColor = UIColor.red
-        vProgressBar.translatesAutoresizingMaskIntoConstraints = false
-        vProgressBar.setProgress(vProgress, animated: false)
-        view.addSubview(vProgressBar)
-        return vProgressBar
     }
     //**********************************************************
     func addButton(vTitle: String, vAlignText: alignText) -> UIButton
     {
         let vButton = UIButton()
+        vButton.tag = groupTag
         vButton.setTitle(vTitle, for: .normal)
         vButton.titleLabel?.font = font
-        vButton.setTitleColor(AppColor.primary, for: .normal)
-        vButton.setTitleColor(AppColor.disabled, for: .disabled)
-        
+        vButton.setTitleColor(AppColor.defaultGame, for: .normal)
+        vButton.setTitleColor(AppColor.defaultDisabled, for: .disabled)
         
         vButton.layer.cornerRadius = 8
         vButton.layer.borderWidth = 3
-        vButton.layer.borderColor = AppColor.primary.cgColor
-        
-//        vButton.layer.shadowColor = UIColor.gray.cgColor
-//        vButton.layer.shadowOpacity = 1.0
-//        vButton.layer.shadowRadius = 3.0
-//        vButton.layer.shadowOffset = CGSize(width: 0, height: 3)
+        vButton.layer.borderColor = AppColor.defaultGame.cgColor
         
         vButton.translatesAutoresizingMaskIntoConstraints = false
         switch(vAlignText)
@@ -165,45 +124,136 @@ class UIDesigner
         view.addSubview(vButton)
         return vButton
     }
+    
     //**********************************************************
-    func addAlignment(vView: UIView, vAlignX: alignX, vAlignY: alignY, vWidth: CGFloat, vHeight: CGFloat, vSubX: UIView?, vSubY: UIView?)
+    func addProgressBar(vProgress: Float) -> ProgressBar
+    {
+        let vProgressBar = ProgressBar()
+        vProgressBar.initView(vView: view)
+        vProgressBar.translatesAutoresizingMaskIntoConstraints = false
+        vProgressBar.setProgress(vProgress: 0.25)
+        view.addSubview(vProgressBar)
+        return vProgressBar
+    }
+    //**********************************************************
+    func addProgressView(vProgress: Float) -> UIProgressView
+    {
+        let vProgressBar = UIProgressView(progressViewStyle: UIProgressViewStyle.default)
+        vProgressBar.tag = groupTag
+        vProgressBar.progressViewStyle = .default
+        vProgressBar.trackTintColor = AppColor.progressTrack
+        vProgressBar.progressTintColor = AppColor.progressTint
+        vProgressBar.translatesAutoresizingMaskIntoConstraints = false
+        vProgressBar.setProgress(vProgress, animated: false)
+        view.addSubview(vProgressBar)
+        return vProgressBar
+    }
+    //**********************************************************
+    func addPageControl(vStartPage: Int, vMaxPages: Int) -> UIPageControl
+    {
+        let vPageControl = UIPageControl()
+        vPageControl.tag = groupTag
+        vPageControl.currentPage = vStartPage
+        vPageControl.numberOfPages = vMaxPages
+        vPageControl.pageIndicatorTintColor = AppColor.defaultGame
+        vPageControl.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(vPageControl)
+        return vPageControl
+    }
+    //**********************************************************
+    // Set both horizontal and vertical layouts
+    func align(vView: UIView, horz: alignHorizontol, vert: alignVertical, widthPct: CGFloat, heightPct: CGFloat, subX: UIView?, subY: UIView?)
+    {
+        landscape(vView: vView, horz: horz, vert: vert, widthPct: widthPct, heightPct: heightPct, subX: subX, subY: subY)
+        portrait(vView:  vView, horz: horz, vert: vert, widthPct: widthPct, heightPct: heightPct, subX: subX, subY: subY)
+    }
+    //**********************************************************
+    func landscape(vView: UIView, horz: alignHorizontol, vert: alignVertical, widthPct: CGFloat, heightPct: CGFloat, subX: UIView?, subY: UIView?)
     {
         var constraints: [NSLayoutConstraint] = []
         
-        switch vAlignX
+        switch horz
         {
         case .left:         constraints.append(alignLeft(vView: vView)); break
         case .right:        constraints.append(alignRight(vView: vView)); break
         case .center:       constraints.append(alignCenterX(vView: vView)); break
-        case .rightOf:      constraints.append(alignRightOf(vView: vView,     superView: vSubX!)); break
-        case .rightInside:  constraints.append(alignRightInside(vView: vView, superView: vSubX!)); break
-        case .leftOf:       constraints.append(alignLeftOf(vView: vView,      superView: vSubX!)); break
-        case .leftInside:   constraints.append(alignLeftInside(vView: vView,  superView: vSubX!)); break
-        case .leftEven:     constraints.append(alignLeftEven(vView: vView,    superView: vSubX!)); break
+        case .rightOf:      constraints.append(alignRightOf(vView: vView,     superView: subX!)); break
+        case .rightInside:  constraints.append(alignRightInside(vView: vView, superView: subX!)); break
+        case .leftOf:       constraints.append(alignLeftOf(vView: vView,      superView: subX!)); break
+        case .leftInside:   constraints.append(alignLeftInside(vView: vView,  superView: subX!)); break
+        case .leftEven:     constraints.append(alignLeftEven(vView: vView,    superView: subX!)); break
         }
         
-        switch vAlignY
+        switch vert
         {
         case .top:          constraints.append(alignTop(vView: vView)); break
+        case .topMargin:    constraints.append(alignTopMargin(vView: vView)); break
         case .bottom:       constraints.append(alignBottom(vView: vView)); break
         case .center:       constraints.append(alignCenterY(vView: vView)); break
-        case .above:        constraints.append(alignAbove(vView: vView,       superView: vSubY!)); break
-        case .aboveInside:  constraints.append(alignAboveInside(vView: vView, superView: vSubY!)); break
-        case .belowInside:  constraints.append(alignBelowInside(vView: vView, superView: vSubY!)); break
-        case .below:        constraints.append(alignBelow(vView: vView,       superView: vSubY!)); break
+        case .above:        constraints.append(alignAbove(vView: vView,       superView: subY!)); break
+        case .aboveInside:  constraints.append(alignAboveInside(vView: vView, superView: subY!)); break
+        case .belowInside:  constraints.append(alignBelowInside(vView: vView, superView: subY!)); break
+        case .below:        constraints.append(alignBelow(vView: vView,       superView: subY!)); break
         }
         
-        if(vWidth != 0)
+        if(widthPct != 0)
         {
-            constraints.append(alignSetWidth(vView: vView, vConstantWidth: vWidth))
+            constraints.append(alignSetWidth(vView: vView, vConstantWidth: widthPct * data.landscapeScreenWidth))
         }
         
-        if(vHeight != 0)
+        if(heightPct != 0)
         {
-            constraints.append(alignSetHeight(vView: vView, vConstantHeight: vHeight))
+            constraints.append(alignSetHeight(vView: vView, vConstantHeight: heightPct * data.landscapeScreenHeight))
         }
         
-        NSLayoutConstraint.activate(constraints)
+        for vConstraint in constraints
+        {
+            data.landscapeConstraints.append(vConstraint)
+        }
+    }
+    //**********************************************************
+    func portrait(vView: UIView, horz: alignHorizontol, vert: alignVertical, widthPct: CGFloat, heightPct: CGFloat, subX: UIView?, subY: UIView?)
+    {
+        var constraints: [NSLayoutConstraint] = []
+        
+        switch horz
+        {
+        case .left:         constraints.append(alignLeft(vView: vView)); break
+        case .right:        constraints.append(alignRight(vView: vView)); break
+        case .center:       constraints.append(alignCenterX(vView: vView)); break
+        case .rightOf:      constraints.append(alignRightOf(vView: vView,     superView: subX!)); break
+        case .rightInside:  constraints.append(alignRightInside(vView: vView, superView: subX!)); break
+        case .leftOf:       constraints.append(alignLeftOf(vView: vView,      superView: subX!)); break
+        case .leftInside:   constraints.append(alignLeftInside(vView: vView,  superView: subX!)); break
+        case .leftEven:     constraints.append(alignLeftEven(vView: vView,    superView: subX!)); break
+        }
+        
+        switch vert
+        {
+        case .top:          constraints.append(alignTop(vView: vView)); break
+        case .topMargin:    constraints.append(alignTopMargin(vView: vView)); break
+        case .bottom:       constraints.append(alignBottom(vView: vView)); break
+        case .center:       constraints.append(alignCenterY(vView: vView)); break
+        case .above:        constraints.append(alignAbove(vView: vView,       superView: subY!)); break
+        case .aboveInside:  constraints.append(alignAboveInside(vView: vView, superView: subY!)); break
+        case .belowInside:  constraints.append(alignBelowInside(vView: vView, superView: subY!)); break
+        case .below:        constraints.append(alignBelow(vView: vView,       superView: subY!)); break
+        }
+        
+        if(widthPct != 0)
+        {
+            constraints.append(alignSetWidth(vView: vView, vConstantWidth: widthPct * data.portraitScreenWidth))
+        }
+        
+        if(heightPct != 0)
+        {
+            constraints.append(alignSetHeight(vView: vView, vConstantHeight: heightPct * data.portraitScreenHeight))
+        }
+        
+        for vConstraint in constraints
+        {
+            data.portraitConstraints.append(vConstraint)
+        }
     }
     //**********************************************************
     func alignSetWidth(vView: UIView, vConstantWidth: CGFloat)-> NSLayoutConstraint
@@ -218,126 +268,132 @@ class UIDesigner
     //**********************************************************
     func alignCenterX(vView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 5)
+        return NSLayoutConstraint(item: vView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: screenConstant)
     }
     //**********************************************************
     func alignCenterY(vView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 5)
+        return NSLayoutConstraint(item: vView, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: screenConstant)
     }
     //**********************************************************
     func alignRightOf(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .leading, relatedBy: .equal, toItem: superView, attribute: .trailing, multiplier: 1, constant: 5)
+        return NSLayoutConstraint(item: vView, attribute: .leading, relatedBy: .equal, toItem: superView, attribute: .trailing, multiplier: 1, constant: screenConstant)
     }
     //**********************************************************
     func alignLeftOf(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .trailing, relatedBy: .equal, toItem: superView, attribute: .leading, multiplier: 1, constant: -5)
+        return NSLayoutConstraint(item: vView, attribute: .trailing, relatedBy: .equal, toItem: superView, attribute: .leading, multiplier: 1, constant: -screenConstant)
     }
     //**********************************************************
     func alignAbove(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: -5)
+        return NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: -screenConstant)
     }
     //**********************************************************
     func alignBelow(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: 5)
+        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: screenConstant)
     }
+    //**********************************************************
     func alignLeft(vView: UIView) -> NSLayoutConstraint
     {
-        let vConstraint = NSLayoutConstraint(item: vView, attribute: .leftMargin, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 5)
-        return vConstraint
+        return NSLayoutConstraint(item: vView, attribute: .leftMargin, relatedBy: .equal, toItem: view, attribute: .leftMargin, multiplier: 1, constant: 0)
     }
     //**********************************************************
     func alignRight(vView: UIView) -> NSLayoutConstraint
     {
-        let vConstraint = NSLayoutConstraint(item: vView, attribute: .rightMargin, relatedBy: .equal, toItem: view, attribute: .rightMargin, multiplier: 1, constant: 5)
-        return vConstraint
+        return NSLayoutConstraint(item: vView, attribute: .rightMargin, relatedBy: .equal, toItem: view, attribute: .rightMargin, multiplier: 1, constant: screenConstant)
     }
     //**********************************************************
     func alignTop(vView: UIView) -> NSLayoutConstraint
     {
-        let vConstraint = NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 10)
-        return vConstraint
+        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0)
     }
     //**********************************************************
     func alignBottom(vView: UIView) -> NSLayoutConstraint
     {
-        let vConstraint = NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
-        return vConstraint
+        return NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
+    }
+    //**********************************************************
+    func alignTopMargin(vView: UIView) -> NSLayoutConstraint
+    {
+        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: UIScreen.main.bounds.height * 0.08 )
     }
     //**********************************************************
     func alignAboveInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: 5)
+        return NSLayoutConstraint(item: vView, attribute: .top, relatedBy: .equal, toItem: superView, attribute: .top, multiplier: 1, constant: screenConstant)
     }
     //**********************************************************
     func alignBelowInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        return NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: -5)
+        return NSLayoutConstraint(item: vView, attribute: .bottom, relatedBy: .equal, toItem: superView, attribute: .bottom, multiplier: 1, constant: -screenConstant)
     }
     //**********************************************************
     func alignLeftInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        let vConstraint = NSLayoutConstraint(item: vView, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1, constant: 10)
-        return vConstraint
+        return NSLayoutConstraint(item: vView, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1, constant: screenConstant * 2) //10)
     }
     //**********************************************************
     func alignLeftEven(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        let vConstraint = NSLayoutConstraint(item: vView, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1, constant: 0)
-        return vConstraint
+        return NSLayoutConstraint(item: vView, attribute: .left, relatedBy: .equal, toItem: superView, attribute: .left, multiplier: 1, constant: 0)
     }
     //**********************************************************
     func alignRightInside(vView: UIView, superView: UIView) -> NSLayoutConstraint
     {
-        let vConstraint = NSLayoutConstraint(item: vView, attribute: .right, relatedBy: .equal, toItem: superView, attribute: .right, multiplier: 1, constant: -10)
-        return vConstraint
+        return NSLayoutConstraint(item: vView, attribute: .right, relatedBy: .equal, toItem: superView, attribute: .right, multiplier: 1, constant: -(screenConstant * 2)) //10)10)
     }
     //**************************************************************************
     func enable(vView: UIButton)
     {
         vView.isEnabled = true
-        vView.setTitleColor(AppColor.enabled , for: .normal)
-        vView.layer.borderColor = AppColor.primary.cgColor
+        vView.setTitleColor(AppColor.defaultEnabled , for: .normal)
+        vView.layer.borderColor = AppColor.defaultGame.cgColor
     }
     //**************************************************************************
     func disable(vView: UIButton)
     {
         vView.isEnabled = false
-        vView.setTitleColor(AppColor.disabled , for: .normal)
-        vView.layer.borderColor = AppColor.disabled.cgColor
+        vView.setTitleColor(AppColor.defaultDisabled , for: .normal)
+        vView.layer.borderColor = AppColor.defaultDisabled.cgColor
     }
     //**************************************************************************
     func enable(vView: UILabel)
     {
-        //vView.isEnabled = false
-        vView.textColor = AppColor.enabled
+        vView.textColor = AppColor.defaultEnabled
     }
     //**************************************************************************
     func disable(vView: UILabel)
     {
-        //vView.isEnabled = false
-        vView.textColor = AppColor.disabled
+        vView.textColor = AppColor.defaultDisabled
     }
-    
+    //**************************************************************************
+    func show(vGroup: Int)
+    {
+        for subview in view.subviews
+        {
+            if(subview.tag == vGroup)
+            {
+                //print("show buttons: \(subview.tag)")
+                subview.isHidden = false
+            }
+        }
+    }
+    //**************************************************************************
+    func hide(vGroup: Int)
+    {
+        for subview in view.subviews
+        {
+            if(subview.tag == vGroup)
+            {
+                //print("\(vGroup) show buttons: \(subview.tag) \(subview.description)")
+                subview.isHidden = true
+            }
+        }
+    }
+    //**********************************************************
 }
-//**********************************************************
-extension UILabel {
-    //**********************************************************
-    func startBlink() {
-        UIView.animate(withDuration: 0.8,
-                       delay:0.0,
-                       options:[.allowUserInteraction, .curveEaseInOut, .autoreverse, .repeat],
-                       animations: { self.alpha = 0 },
-                       completion: nil)
-    }
-    //**********************************************************
-    func stopBlink() {
-        layer.removeAllAnimations()
-        alpha = 1
-    }
-    //**********************************************************
-}
+
+

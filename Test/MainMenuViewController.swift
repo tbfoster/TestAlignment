@@ -8,12 +8,10 @@ enum menuReturnTypes
 //**************************************************************************
 class MainMenuViewController: UIViewController
 {
+    var data = Data.sharedInstance
     var uid = UIDesigner()
     
-    var lblHUD = UILabel()
     var btnAddDefense = UIButton()
-    var btnUpgDefense = UIButton()
-    var btnHud = UIButton()
     
     //**************************************************************************
     override func viewDidLoad() {
@@ -21,45 +19,73 @@ class MainMenuViewController: UIViewController
         title = "Main Menu"
         view.backgroundColor = .black
         
-        uid.initView(vView: view)
+        uid.initView(vView: view, vGroupTag: 1000)
         
-        let titleAttributes = [NSAttributedStringKey.foregroundColor: AppColor.primary]
+        let titleAttributes = [NSAttributedStringKey.foregroundColor: AppColor.defaultGame]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         
-        lblHUD = uid.addLabel(vTitle: "This is the HUD", vAlignText: .center, vInvertColors: false, vhasFrame: false)
+        checkOrientation(vWidth: view.bounds.width, vHeight: view.bounds.height)
         
-        btnAddDefense = uid.addButton(vTitle: "Add Defense    ", vAlignText: .center)
-        btnUpgDefense = uid.addButton(vTitle: "Upgrade Defense", vAlignText: .center)
-        btnHud        = uid.addButton(vTitle: "Hud Menu", vAlignText: .center)
-            
+        btnAddDefense = uid.addButton(vTitle: "Add Defense", vAlignText: .center)
+       
         // Add Alignments
-        uid.addAlignment(vView: lblHUD,        vAlignX: .center, vAlignY: .top,    vWidth: 200, vHeight: 30, vSubX: nil, vSubY: nil)
-        uid.addAlignment(vView: btnUpgDefense, vAlignX: .center, vAlignY: .center, vWidth: 300, vHeight: 75, vSubX: nil, vSubY: nil)
-        uid.addAlignment(vView: btnAddDefense, vAlignX: .center, vAlignY: .above,  vWidth: 300, vHeight: 75, vSubX: nil, vSubY: btnUpgDefense)
-        uid.addAlignment(vView: btnHud,        vAlignX: .center, vAlignY: .below,  vWidth: 300, vHeight: 75, vSubX: nil, vSubY: btnUpgDefense)
+        uid.align(vView: btnAddDefense, horz: .center, vert: .center, widthPct: 0.80, heightPct: 0.12, subX: nil, subY: nil)
         
         // Add Actions
         btnAddDefense.addTarget(self, action: #selector(handleAddDefenseMenu(button:)), for: .touchUpInside)
-        btnUpgDefense.addTarget(self, action: #selector(handleUpgDefenseMenu(button:)), for: .touchUpInside)
-        btnHud.addTarget(self, action: #selector(handleHudMenu(button:)), for: .touchUpInside)
+        resize()
+    }
+    //**************************************************************************
+    func checkOrientation(vWidth: CGFloat, vHeight: CGFloat)
+    {
+        if(vWidth < vHeight)
+        {
+            data.landscape = false
+            data.landscapeScreenWidth = vHeight
+            data.landscapeScreenHeight = vWidth
+            
+            data.portraitScreenWidth = vWidth
+            data.portraitScreenHeight = vHeight
+        }
+        else
+        {
+            data.landscape = true
+            data.landscapeScreenWidth = vWidth
+            data.landscapeScreenHeight = vHeight
+            
+            data.portraitScreenWidth = vHeight
+            data.portraitScreenHeight = vWidth
+        }
+    }
+    //**************************************************************************
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
+    {
+        checkOrientation(vWidth: size.width, vHeight: size.height)
+        resize()
+    }
+    //**************************************************************************
+    func resize()
+    {
+        if(data.landscape == true)
+        {
+            //print("Landscape()")
+            NSLayoutConstraint.deactivate(data.portraitConstraints)
+            NSLayoutConstraint.activate(data.landscapeConstraints)
+        }
+        else
+        {
+            //print("Portrait()")
+            NSLayoutConstraint.deactivate(data.landscapeConstraints)
+            NSLayoutConstraint.activate(data.portraitConstraints)
+        }
     }
     //**************************************************************************
     @objc func handleAddDefenseMenu(button: UIButton) {
                 MainMenuViewController().dismiss(animated: true, completion: nil)
                 present(AddDefenseVC(), animated: true, completion: nil)
-    }
-    //**************************************************************************
-    @objc func handleUpgDefenseMenu(button: UIButton) {
-        MainMenuViewController().dismiss(animated: true, completion: nil)
-                present(UpgradeDefenseVC(), animated: true, completion: nil)
-    }
-    //**************************************************************************
-    @objc func handleHudMenu(button: UIButton) {
-        MainMenuViewController().dismiss(animated: true, completion: nil)
-        present(HudVC(), animated: true, completion: nil)
     }
     //**************************************************************************
 }

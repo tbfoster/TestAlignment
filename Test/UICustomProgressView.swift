@@ -27,23 +27,32 @@ class UICustomProgressView: UIView
     var maskedProgressLabel = UILabel()
     var allSubViews = [String : UIView]()
     var viewMask = UIView()
+    var rect = CGRect()
     
     init(vRect: CGRect)
     {
-        super.init(frame: CGRect(x: vRect.minX, y: vRect.minY, width: vRect.width, height: vRect.height))
+        rect = vRect
+        super.init(frame: rect)
         initView()
-        addAllConstraints()
+        //addAllConstraints()
     }
     //**************************************************************************
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     //**************************************************************************
+    func test(vRect: CGRect)
+    {
+        self.rect = vRect
+        self.layoutIfNeeded()
+        self.updateMask()
+    }
+    //**************************************************************************
     func initView()
     {
         self.layer.cornerRadius = 2.0
         self.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha: 1)
-        self.normalTextColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        self.normalTextColor = UIColor.blue // UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
         self.maskedTextColor = UIColor.white
         
         self.container.layer.borderWidth = 3.0
@@ -132,11 +141,9 @@ class UICustomProgressView: UIView
     //**************************************************************************
     func updateMask()
     {
-        print("MaskedConstant: \(progressBarMaskWidthConstraint.constant) \(self.viewMask.bounds.size.height)")
-        let maskRect = CGRect(x: 0, y: 0, width: progressBarMaskWidthConstraint.constant, height: self.viewMask.bounds.size.height)
+        let path = CGPath(rect: CGRect(x: 0, y: 0, width: progressBarMaskWidthConstraint.constant, height: self.viewMask.bounds.size.height), transform: nil)
         let maskLayer = CAShapeLayer()
-        maskLayer.frame = maskRect
-        
+        maskLayer.path = path
         self.maskedProgressLabel.layer.mask = maskLayer
     }
     //**************************************************************************

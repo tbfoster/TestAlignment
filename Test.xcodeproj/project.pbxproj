@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0531FD6B20A54A6500983647 /* UpgradeDefenseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531FD6A20A54A6500983647 /* UpgradeDefenseVC.swift */; };
 		0531FD6D20A54B2400983647 /* AddDefenseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531FD6C20A54B2400983647 /* AddDefenseVC.swift */; };
 		0531FD6F20A54B7300983647 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531FD6E20A54B7300983647 /* MainMenuViewController.swift */; };
 		0531FD7320A54D8300983647 /* UIDesigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0531FD7220A54D8300983647 /* UIDesigner.swift */; };
@@ -15,12 +14,12 @@
 		0540329120A2A3B800431F77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0540329020A2A3B800431F77 /* Assets.xcassets */; };
 		05411E8120AFEDAC00C041FE /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05411E7F20AFEDAB00C041FE /* Fabric.framework */; };
 		05411E8220AFEDAC00C041FE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05411E8020AFEDAB00C041FE /* Crashlytics.framework */; };
-		05446F6E20A6BDA600E84864 /* HudVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05446F6D20A6BDA600E84864 /* HudVC.swift */; };
 		05A9BE6520BB189D008B57AE /* UICustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A9BE6420BB189D008B57AE /* UICustomProgressView.swift */; };
+		05A9BE6720BBB10C008B57AE /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A9BE6620BBB10C008B57AE /* ProgressBar.swift */; };
+		05A9BE6920BBD294008B57AE /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A9BE6820BBD294008B57AE /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0531FD6A20A54A6500983647 /* UpgradeDefenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeDefenseVC.swift; sourceTree = "<group>"; };
 		0531FD6C20A54B2400983647 /* AddDefenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDefenseVC.swift; sourceTree = "<group>"; };
 		0531FD6E20A54B7300983647 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		0531FD7220A54D8300983647 /* UIDesigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDesigner.swift; sourceTree = "<group>"; };
@@ -30,8 +29,9 @@
 		0540329520A2A3B800431F77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05411E7F20AFEDAB00C041FE /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		05411E8020AFEDAB00C041FE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		05446F6D20A6BDA600E84864 /* HudVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HudVC.swift; sourceTree = "<group>"; };
 		05A9BE6420BB189D008B57AE /* UICustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICustomProgressView.swift; sourceTree = "<group>"; };
+		05A9BE6620BBB10C008B57AE /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		05A9BE6820BBD294008B57AE /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,13 +70,13 @@
 			children = (
 				0531FD6E20A54B7300983647 /* MainMenuViewController.swift */,
 				0531FD6C20A54B2400983647 /* AddDefenseVC.swift */,
-				0531FD6A20A54A6500983647 /* UpgradeDefenseVC.swift */,
-				05446F6D20A6BDA600E84864 /* HudVC.swift */,
 				0531FD7220A54D8300983647 /* UIDesigner.swift */,
 				0540328920A2A3B600431F77 /* AppDelegate.swift */,
 				0540329020A2A3B800431F77 /* Assets.xcassets */,
 				0540329520A2A3B800431F77 /* Info.plist */,
 				05A9BE6420BB189D008B57AE /* UICustomProgressView.swift */,
+				05A9BE6620BBB10C008B57AE /* ProgressBar.swift */,
+				05A9BE6820BBD294008B57AE /* Data.swift */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -169,10 +169,10 @@
 			files = (
 				0531FD6F20A54B7300983647 /* MainMenuViewController.swift in Sources */,
 				0531FD7320A54D8300983647 /* UIDesigner.swift in Sources */,
-				0531FD6B20A54A6500983647 /* UpgradeDefenseVC.swift in Sources */,
-				05446F6E20A6BDA600E84864 /* HudVC.swift in Sources */,
 				05A9BE6520BB189D008B57AE /* UICustomProgressView.swift in Sources */,
 				0531FD6D20A54B2400983647 /* AddDefenseVC.swift in Sources */,
+				05A9BE6720BBB10C008B57AE /* ProgressBar.swift in Sources */,
+				05A9BE6920BBD294008B57AE /* Data.swift in Sources */,
 				0540328A20A2A3B600431F77 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
