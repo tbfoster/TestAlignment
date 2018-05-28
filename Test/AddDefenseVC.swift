@@ -11,11 +11,15 @@ class AddDefenseVC: UIViewController
     var btnSelect = UIButton()
     var btnSelect2 = UIButton()
     var testCustom: UICustomProgressView
-    var lblShields = ProgressBar()
+//    var shields = ProgressBar()
+//
+//    var lblShields = UILabel()
+//    var lblShieldsMask = UILabel()
+//    var lblShieldsShade = UIView()
     
     //**************************************************************************
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        testCustom = UICustomProgressView.init(vRect: CGRect(x: 100, y: 0, width: 200, height: 80))
+        testCustom = UICustomProgressView()
         super.init(nibName: nil, bundle: nil)
     }
     //**************************************************************************
@@ -39,24 +43,17 @@ class AddDefenseVC: UIViewController
         
         btnSelect  = uid.addButton(vTitle: "Select1", vAlignText: .center)
         btnSelect2 = uid.addButton(vTitle: "Select2", vAlignText: .center)
-        lblShields = uid.addProgressBar(vProgress: 0.60)
         
         uid.align(vView: btnSelect,  horz: .center, vert: .topMargin, widthPct: 0.80, heightPct: 0.15, subX: nil, subY: nil)
-        uid.align(vView: btnSelect2, horz: .center, vert: .below,     widthPct: 0.80, heightPct: 0.15, subX: nil, subY: btnSelect)
-        uid.align(vView: lblShields, horz: .center, vert: .below,     widthPct: 0.80, heightPct: 0.20, subX: nil, subY: btnSelect2)
-        lblShields.addAllConstraints()
-        //uid.align(vView: lblShields.maskedProgressLabel, horz: .leftInside, vert: .belowInside, widthPct: 0.25, heightPct: 0.15, subX: lblShields.container, subY: lblShields.container)
-        //lblShields.addAllConstraints()
+        uid.align(vView: btnSelect2, horz: .center, vert: .below,     widthPct: 0.80, heightPct: 0.08, subX: nil, subY: btnSelect)
+        
+        testCustom.initView()
+        view.addSubview(testCustom)
+        testCustom.resize(vRect: CGRect(x: 0, y: 0, width: 50, height: 20), vSubView: btnSelect2)
+        testCustom.setProgress(vProgress: 0.45)
         
         btnSelect.addTarget(self, action: #selector(handleSelect1Button(button:)), for: .touchUpInside)
         btnSelect2.addTarget(self, action: #selector(handleSelect2Button(button:)), for: .touchUpInside)
-        
-        view.addSubview(testCustom)
-        testCustom.test(vRect: CGRect(x: 300, y: 400, width: 400, height: 120))
-        testCustom.addAllConstraints()
-        testCustom.setProgress(vProgress: 0.45)
-        
-        //testCustom.test(vRect: CGRect(x: 100, y: 200, width: 200, height: 80))
         
         resize()
     }
@@ -106,13 +103,11 @@ class AddDefenseVC: UIViewController
     }
     //**************************************************************************
     @objc func handleSelect1Button(button: UIButton) {
-        testCustom.setProgress(vProgress: 0.80)
-        lblShields.setProgress(vProgress: 0.86)
+        testCustom.setProgress(vProgress: 0.95)
     }
     //**************************************************************************
     @objc func handleSelect2Button(button: UIButton) {
         testCustom.setProgress(vProgress: 0.20)
-        lblShields.setProgress(vProgress: 0.26)
     }
     //**************************************************************************
 }

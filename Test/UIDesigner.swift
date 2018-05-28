@@ -124,6 +124,19 @@ class UIDesigner
         view.addSubview(vButton)
         return vButton
     }
+    //**********************************************************
+    func addUIView() -> UIView
+    {
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.layer.borderWidth = 3.0
+        containerView.layer.borderColor = UIColor.gray.cgColor
+        containerView.backgroundColor = UIColor.white
+        containerView.layer.cornerRadius = 8.0
+        view.addSubview(containerView)
+        view.sendSubview(toBack: containerView)
+        return containerView
+    }
     
     //**********************************************************
     func addProgressBar(vProgress: Float) -> ProgressBar

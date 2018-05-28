@@ -52,13 +52,11 @@ class ProgressBar: UIView
         self.maskedProgressLabel.textColor = UIColor.blue
         //self.maskedProgressLabel.clipsToBounds = true
         
-        //self.container.addSubview(self.progressBar)
-        //self.container.addSubview(self.progressLabel)
-        //self.container.addSubview(self.maskedProgressLabel)
-        //self.container.addSubview(self.viewMask)
-        self.addSubview(self.container)
-        self.addSubview(self.progressLabel)
-        self.addSubview(self.maskedProgressLabel)
+        vView.addSubview(self.container)
+        
+        //self.addSubview(self.container)
+        vView.addSubview(self.progressLabel)
+        //vView.addSubview(self.maskedProgressLabel)
     }
     //**************************************************************************
     func addAllConstraints()
@@ -69,8 +67,8 @@ class ProgressBar: UIView
         self.maskedProgressLabel.translatesAutoresizingMaskIntoConstraints = false
 //        self.viewMask.translatesAutoresizingMaskIntoConstraints = false
         
-        uid.align(vView: progressLabel,       horz: .center, vert: .belowInside, widthPct: 0, heightPct: 0, subX: self, subY: self)
-        uid.align(vView: maskedProgressLabel, horz: .center, vert: .belowInside, widthPct: 0, heightPct: 0, subX: self, subY: self)
+//        uid.align(vView: progressLabel,       horz: .center, vert: .belowInside, widthPct: 0, heightPct: 0, subX: container, subY: container)
+//        uid.align(vView: maskedProgressLabel, horz: .center, vert: .belowInside, widthPct: 0, heightPct: 0, subX: container, subY: container)
         
 //        sendSubview(toBack: self.container)
 //        progressLabel.bringSubview(toFront: self.progressLabel)

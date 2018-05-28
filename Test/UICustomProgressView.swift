@@ -13,6 +13,8 @@ import Foundation
 
 class UICustomProgressView: UIView
 {
+    var data = Data.sharedInstance
+    
     var containerHeightPadding = NSArray()
     var containerWidthPadding = NSArray()
     var progressBarWidthConstraint = NSLayoutConstraint()
@@ -27,23 +29,27 @@ class UICustomProgressView: UIView
     var maskedProgressLabel = UILabel()
     var allSubViews = [String : UIView]()
     var viewMask = UIView()
-    var rect = CGRect()
+    //var rect = CGRect()
+    //var subView = UIView()
     
-    init(vRect: CGRect)
-    {
-        rect = vRect
-        super.init(frame: rect)
-        initView()
-        //addAllConstraints()
-    }
     //**************************************************************************
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    //init()
+    //{
+        //subView = vSubView
+        //rect = vRect
+//        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+//        initView()
+    //}
     //**************************************************************************
-    func test(vRect: CGRect)
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+    //**************************************************************************
+    func resize(vRect: CGRect, vSubView: UIView)
     {
-        self.rect = vRect
+        //rect = vRect
+        self.frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+        addAllConstraints(vSubView: vSubView)
         self.layoutIfNeeded()
         self.updateMask()
     }
@@ -91,7 +97,7 @@ class UICustomProgressView: UIView
         return NSLayoutConstraint.constraints(withVisualFormat: vFormat, options: [], metrics: nil, views: allSubViews)
     }
     //**************************************************************************
-    func addAllConstraints()
+    func addAllConstraints(vSubView: UIView)
     {
         self.container.translatesAutoresizingMaskIntoConstraints = false
         self.progressBar.translatesAutoresizingMaskIntoConstraints = false
@@ -99,13 +105,24 @@ class UICustomProgressView: UIView
         self.maskedProgressLabel.translatesAutoresizingMaskIntoConstraints = false
         self.viewMask.translatesAutoresizingMaskIntoConstraints = false
         
-        // container constraint
-        containerHeightPadding = alignWithVisualFormat(vView: self.container, vFormat: "H:|-0-[container]-1-|") as NSArray
-        containerWidthPadding  = alignWithVisualFormat(vView: self.container, vFormat: "V:|-0-[container]-1-|") as NSArray
-        NSLayoutConstraint.activate(containerHeightPadding as! [NSLayoutConstraint])
-        NSLayoutConstraint.activate(containerWidthPadding as! [NSLayoutConstraint])
+        //NSLayoutConstraint(item: vView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: vConstantWidth)
+        let vWidth = 0.25 * data.portraitScreenWidth
+        //widthPct * data.portraitScreenWidth
         
-        // progressBar constraint
+        let vAlign = [NSLayoutConstraint(item: self.container, attribute: .left, relatedBy: .equal, toItem: vSubView, attribute: .left, multiplier: 1, constant: 0),
+                      NSLayoutConstraint(item: self.container, attribute: .top, relatedBy: .equal, toItem: vSubView, attribute: .bottom, multiplier: 1, constant: 1),
+                      NSLayoutConstraint(item: self.container, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: vWidth),
+                      NSLayoutConstraint(item: self.container, attribute: .height, relatedBy: .equal, toItem: vSubView, attribute: .height, multiplier: 1, constant: 0)
+                      ]
+        NSLayoutConstraint.activate(vAlign)
+        
+        // Container constraint
+//        containerHeightPadding = alignWithVisualFormat(vView: self.container, vFormat: "H:|-0-[container]-1-|") as NSArray
+//        containerWidthPadding  = alignWithVisualFormat(vView: self.container, vFormat: "V:|-0-[container]-1-|") as NSArray
+//        NSLayoutConstraint.activate(containerHeightPadding as! [NSLayoutConstraint])
+//        NSLayoutConstraint.activate(containerWidthPadding as! [NSLayoutConstraint])
+        
+        // ProgressBar constraint
         NSLayoutConstraint.activate(alignWithVisualFormat(vView: self.container, vFormat: "H:|[progressBar]"))
         progressBarWidthConstraint = NSLayoutConstraint(item: self.progressBar, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 10.0, constant:0)
         NSLayoutConstraint.activate([progressBarWidthConstraint])
@@ -132,7 +149,7 @@ class UICustomProgressView: UIView
         let percentage = vProgress * 100
         self.progressLabel.text = "Shields \(percentage)"
         self.maskedProgressLabel.text = "Shields \(percentage)"
-        progressBarWidthConstraint.constant = vProgress * (self.bounds.size.width - 10)
+        progressBarWidthConstraint.constant = vProgress * (self.container.bounds.size.width - 10)
         progressBarMaskWidthConstraint.constant = progressBarWidthConstraint.constant
         
         self.layoutIfNeeded()
