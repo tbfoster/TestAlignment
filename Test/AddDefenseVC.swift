@@ -12,6 +12,7 @@ class AddDefenseVC: UIViewController
     var btnSelect2 = UIButton()
     var testCustom = UICustomProgressView()
     var testCustom2 = UICustomProgressView()
+    var testCustom3 = UICustomProgressView()
     
     //**************************************************************************
     override func viewDidLoad() {
@@ -36,13 +37,18 @@ class AddDefenseVC: UIViewController
         
         testCustom.initView()
         view.addSubview(testCustom)
-        testCustom.resize(hAlign: .leftEven, vWidth: 0.30, vHeight: 0.10, vSubX: btnSelect2, vSubY: btnSelect2)
+        testCustom.resize(hAlign: .center, vWidth: 0.30, vHeight: 0.10, vSubX: view, vSubY: btnSelect2)
         testCustom.setProgress(vProgress: 0.15)
         
         testCustom2.initView()
         view.addSubview(testCustom2)
         testCustom2.resize(hAlign: .rightOf, vWidth: 0.30, vHeight: 0.05, vSubX: btnSelect2, vSubY: btnSelect2)
         testCustom2.setProgress(vProgress: 0.45)
+        
+        testCustom3.initView()
+        view.addSubview(testCustom3)
+        testCustom3.resize(hAlign: .leftEven, vWidth: 0.30, vHeight: 0.05, vSubX: btnSelect, vSubY: btnSelect2)
+        testCustom3.setProgress(vProgress: 0.45)
         
         btnSelect.addTarget(self, action: #selector(handleSelect1Button(button:)), for: .touchUpInside)
         btnSelect2.addTarget(self, action: #selector(handleSelect2Button(button:)), for: .touchUpInside)
@@ -89,17 +95,19 @@ class AddDefenseVC: UIViewController
         else
         {
             //print("Portrait()")
-            NSLayoutConstraint.deactivate(data.landscapeConstraints)
-            NSLayoutConstraint.activate(data.portraitConstraints)
+//            NSLayoutConstraint.deactivate(data.landscapeConstraints)
+//            NSLayoutConstraint.activate(data.portraitConstraints)
         }
     }
     //**************************************************************************
     @objc func handleSelect1Button(button: UIButton) {
         testCustom.setProgress(vProgress: 0.95)
+        testCustom2.setProgress(vProgress: 0.65)
     }
     //**************************************************************************
     @objc func handleSelect2Button(button: UIButton) {
         testCustom.setProgress(vProgress: 0.20)
+        testCustom2.setProgress(vProgress: 0.32)
     }
     //**************************************************************************
 }
