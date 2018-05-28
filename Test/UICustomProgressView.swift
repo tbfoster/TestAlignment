@@ -126,7 +126,7 @@ class UICustomProgressView: UIView
         NSLayoutConstraint.activate(alignWithVisualFormat(vView: self.viewMask, vName: "viewMask", vFormat: "V:|[viewMask]"))
         
         progressBarMaskWidthConstraint = NSLayoutConstraint(item: self.viewMask, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 10.0, constant:0)
-        //NSLayoutConstraint.activate([progressBarMaskWidthConstraint])
+        NSLayoutConstraint.activate([progressBarMaskWidthConstraint])
     }
     //**************************************************************************
     func setProgress(vProgress: CGFloat)
