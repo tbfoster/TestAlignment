@@ -17,6 +17,9 @@
 		05A9BE6520BB189D008B57AE /* UICustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A9BE6420BB189D008B57AE /* UICustomProgressView.swift */; };
 		05A9BE6720BBB10C008B57AE /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A9BE6620BBB10C008B57AE /* ProgressBar.swift */; };
 		05A9BE6920BBD294008B57AE /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A9BE6820BBD294008B57AE /* Data.swift */; };
+		05A9BE6D20BD042A008B57AE /* BackgroundShields.png in Resources */ = {isa = PBXBuildFile; fileRef = 05A9BE6C20BD0429008B57AE /* BackgroundShields.png */; };
+		05A9BE6F20BD058F008B57AE /* BackgroundReload.png in Resources */ = {isa = PBXBuildFile; fileRef = 05A9BE6E20BD058F008B57AE /* BackgroundReload.png */; };
+		05A9BE7120BD06E5008B57AE /* BackgroundPower.png in Resources */ = {isa = PBXBuildFile; fileRef = 05A9BE7020BD06E5008B57AE /* BackgroundPower.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		05A9BE6420BB189D008B57AE /* UICustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICustomProgressView.swift; sourceTree = "<group>"; };
 		05A9BE6620BBB10C008B57AE /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		05A9BE6820BBD294008B57AE /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		05A9BE6C20BD0429008B57AE /* BackgroundShields.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundShields.png; sourceTree = "<group>"; };
+		05A9BE6E20BD058F008B57AE /* BackgroundReload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundReload.png; sourceTree = "<group>"; };
+		05A9BE7020BD06E5008B57AE /* BackgroundPower.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BackgroundPower.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,9 @@
 		0540328820A2A3B600431F77 /* Test */ = {
 			isa = PBXGroup;
 			children = (
+				05A9BE7020BD06E5008B57AE /* BackgroundPower.png */,
+				05A9BE6E20BD058F008B57AE /* BackgroundReload.png */,
+				05A9BE6C20BD0429008B57AE /* BackgroundShields.png */,
 				0531FD6E20A54B7300983647 /* MainMenuViewController.swift */,
 				0531FD6C20A54B2400983647 /* AddDefenseVC.swift */,
 				0531FD7220A54D8300983647 /* UIDesigner.swift */,
@@ -140,7 +149,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05A9BE6D20BD042A008B57AE /* BackgroundShields.png in Resources */,
 				0540329120A2A3B800431F77 /* Assets.xcassets in Resources */,
+				05A9BE6F20BD058F008B57AE /* BackgroundReload.png in Resources */,
+				05A9BE7120BD06E5008B57AE /* BackgroundPower.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

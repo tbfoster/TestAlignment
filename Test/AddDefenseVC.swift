@@ -35,19 +35,20 @@ class AddDefenseVC: UIViewController
         uid.align(vView: btnSelect,  horz: .center, vert: .topMargin, widthPct: 0.80, heightPct: 0.15, subX: nil, subY: nil)
         uid.align(vView: btnSelect2, horz: .center, vert: .below,     widthPct: 0.40, heightPct: 0.08, subX: nil, subY: btnSelect)
         
-        testCustom.initView()
+        let vFont = UIFont.boldSystemFont(ofSize: 32)
+        testCustom.initView(vDesc: "Reload", vBackground: UIColor.black, vBorder: UIColor.gray, vNormal: UIColor.blue, vMasked: UIColor.white, vShade: UIColor.blue, vFont: vFont, vImage: "BackgroundReload.png")
         view.addSubview(testCustom)
-        testCustom.resize(hAlign: .center, vWidth: 0.30, vHeight: 0.10, vSubX: view, vSubY: btnSelect2)
+        testCustom.resize(hAlign: .center, vAlign: .below, vWidth: 0.33, vHeight: 0.08, vSubX: view, vSubY: btnSelect2)
         testCustom.setProgress(vProgress: 0.15)
         
-        testCustom2.initView()
+        testCustom2.initView(vDesc: "Power", vBackground: UIColor.white, vBorder: UIColor.darkGray, vNormal: UIColor.blue, vMasked: UIColor.white, vShade: UIColor.blue, vFont: vFont, vImage: "BackgroundPower.png")
         view.addSubview(testCustom2)
-        testCustom2.resize(hAlign: .rightOf, vWidth: 0.30, vHeight: 0.05, vSubX: btnSelect2, vSubY: btnSelect2)
+        testCustom2.resize(hAlign: .rightInside, vAlign: .below, vWidth: 0.33, vHeight: 0.08, vSubX: btnSelect, vSubY: btnSelect2)
         testCustom2.setProgress(vProgress: 0.45)
         
-        testCustom3.initView()
+        testCustom3.initView(vDesc: "Shields", vBackground: UIColor.black, vBorder: UIColor.lightGray, vNormal: UIColor.yellow, vMasked: UIColor.black, vShade: UIColor.yellow, vFont: vFont, vImage: "BackgroundShields.png")
         view.addSubview(testCustom3)
-        testCustom3.resize(hAlign: .leftEven, vWidth: 0.30, vHeight: 0.05, vSubX: btnSelect, vSubY: btnSelect2)
+        testCustom3.resize(hAlign: .leftEven, vAlign: .below, vWidth: 0.33, vHeight: 0.08, vSubX: btnSelect, vSubY: btnSelect2)
         testCustom3.setProgress(vProgress: 0.45)
         
         btnSelect.addTarget(self, action: #selector(handleSelect1Button(button:)), for: .touchUpInside)
@@ -102,12 +103,14 @@ class AddDefenseVC: UIViewController
     //**************************************************************************
     @objc func handleSelect1Button(button: UIButton) {
         testCustom.setProgress(vProgress: 0.95)
-        testCustom2.setProgress(vProgress: 0.65)
+        testCustom2.setProgress(vProgress: 1.0)
+        testCustom3.setProgress(vProgress: 1.0)
     }
     //**************************************************************************
     @objc func handleSelect2Button(button: UIButton) {
         testCustom.setProgress(vProgress: 0.20)
         testCustom2.setProgress(vProgress: 0.32)
+        testCustom3.setProgress(vProgress: 0.12)
     }
     //**************************************************************************
 }
