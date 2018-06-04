@@ -40,7 +40,7 @@ class UICustomProgressView: UIView
         self.updateMask()
     }
     //**************************************************************************
-    func initView(vDesc: String, vBackground: UIColor, vBorder: UIColor, vNormal: UIColor, vMasked: UIColor, vShade: UIColor, vFont: UIFont, vImage: String)
+    func initView(vSuperview: UIView, vDesc: String, vBackground: UIColor, vBorder: UIColor, vNormal: UIColor, vMasked: UIColor, vShade: UIColor, vFont: UIFont, vImage: String?)
     {
         desc = vDesc
         self.layer.cornerRadius = 2.0
@@ -54,8 +54,14 @@ class UICustomProgressView: UIView
         self.container.layer.cornerRadius = 8.0
         self.container.clipsToBounds = true
         
-        //self.progressBar.backgroundColor = vShade //UIColor(red: 0.2, green: 0.3, blue: 0.8, alpha: 1)
-        self.progressBar.backgroundColor = UIColor(patternImage: UIImage(named: vImage)!)
+        if(vImage == nil)
+        {
+            self.progressBar.backgroundColor = vShade //UIColor(red: 0.2, green: 0.3, blue: 0.8, alpha: 1)
+        }
+        else
+        {
+            self.progressBar.backgroundColor = UIColor(patternImage: UIImage(named: vImage!)!)
+        }
         
         self.progressLabel.font = vFont //UIFont.boldSystemFont(ofSize: 32)
         self.progressLabel.textAlignment = .center
@@ -79,6 +85,7 @@ class UICustomProgressView: UIView
         allSubViews["progressLabel"] = self.progressLabel
         allSubViews["maskedProgressLabel"] = self.maskedProgressLabel
         allSubViews["viewMask"] = self.viewMask
+        vSuperview.addSubview(self)
     }
     //**************************************************************************
     func alignWithVisualFormat(vView: UIView, vFormat: String)-> [NSLayoutConstraint]
@@ -135,27 +142,6 @@ class UICustomProgressView: UIView
         let widthHeight = [NSLayoutConstraint(item: self.container, attribute: .width,   relatedBy: .equal, toItem: nil,   attribute: .notAnAttribute, multiplier: 1, constant: cWidth),
                            NSLayoutConstraint(item: self.container, attribute: .height,  relatedBy: .equal, toItem: nil,   attribute: .notAnAttribute, multiplier: 1, constant: cHeight)]
         NSLayoutConstraint.activate(widthHeight)
-        
-//
-//        // ProgressBar constraint
-//        alignWithVisualFormat(vView: self.container, vFormat: "H:|[progressBar]")
-//        progressBarWidthConstraint = NSLayoutConstraint(item: self.progressBar, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 10.0, constant:0)
-//        data.landscapeConstraints.append(progressBarWidthConstraint)
-//        alignWithVisualFormat(vView: self.container, vFormat: "V:|[progressBar]|")
-//
-//        // ProgressLabel Constraint
-//        alignWithVisualFormat(vView: self.container, vFormat: "H:|[progressLabel]|")
-//        alignWithVisualFormat(vView: self.container, vFormat: "V:|[progressLabel]|")
-//        // MaskProgressLabel Constraint
-//        alignWithVisualFormat(vView: self.container, vFormat: "H:|[maskedProgressLabel]|")
-//        alignWithVisualFormat(vView: self.container, vFormat: "V:|[maskedProgressLabel]|")
-//        // View Mask
-//        alignWithVisualFormat(vView: self.container, vFormat: "H:|[viewMask]")
-//        alignWithVisualFormat(vView: self.container, vFormat: "V:|[viewMask]|")
-//        // Progress Bar Width Constraint
-//        progressBarMaskWidthConstraint = NSLayoutConstraint(item: self.viewMask, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 10.0, constant:0)
-//        data.landscapeConstraints.append(NSLayoutConstraint(item: self.viewMask, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 10.0, constant:0))
-        
         NSLayoutConstraint.activate(alignWithVisualFormat(vView: self.container, vFormat: "H:|[progressBar]"))
         progressBarWidthConstraint = NSLayoutConstraint(item: self.progressBar, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 10.0, constant:0)
         NSLayoutConstraint.activate([progressBarWidthConstraint])

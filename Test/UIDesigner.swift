@@ -174,6 +174,21 @@ class UIDesigner
         return vPageControl
     }
     //**********************************************************
+    func addPickerView() -> UIPickerView
+    {
+        let vPickerView = UIPickerView()
+        vPickerView.tag = groupTag
+        vPickerView.translatesAutoresizingMaskIntoConstraints = false
+        vPickerView.backgroundColor = UIColor.black
+        vPickerView.tintColor = UIColor.red
+        vPickerView.layer.cornerRadius = 8
+        vPickerView.layer.borderWidth = 3
+        vPickerView.layer.borderColor = AppColor.defaultGame.cgColor
+        
+        view.addSubview(vPickerView)
+        return vPickerView
+    }
+    //**********************************************************
     // Set both horizontal and vertical layouts
     func align(vView: UIView, horz: alignHorizontol, vert: alignVertical, widthPct: CGFloat, heightPct: CGFloat, subX: UIView?, subY: UIView?)
     {
